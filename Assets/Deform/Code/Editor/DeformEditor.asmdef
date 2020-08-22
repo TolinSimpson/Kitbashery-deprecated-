@@ -1,0 +1,17 @@
+{
+    "name": "DeformEditor",
+    "references": [
+        "Beans.Unity.Editor",
+        "Deform"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
