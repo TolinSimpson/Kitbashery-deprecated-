@@ -8094,6 +8094,7 @@ MonoBehaviour:
   gizmos: {fileID: 306725884}
   importer: {fileID: 2072880734}
   importUI: {fileID: 1671486739}
+  browserManager: {fileID: 277170268}
   currentImport: {fileID: 0}
   parts: []
   selectedParts: []

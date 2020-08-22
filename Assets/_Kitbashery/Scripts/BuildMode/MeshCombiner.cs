@@ -16,8 +16,8 @@ public static class MeshCombiner
         Mesh m = new Mesh();
 
         List<CombineInstance> combine = new List<CombineInstance>();
-        MaxRectsBinPack binPack = new MaxRectsBinPack(1, 1);
-        List<Vector2> packedUV = new List<Vector2>();
+        //MaxRectsBinPack binPack = new MaxRectsBinPack(1, 1);
+        //List<Vector2> packedUV = new List<Vector2>();
 
         if (filters.Count > 0)
         {
@@ -30,6 +30,7 @@ public static class MeshCombiner
                     instance.transform = mf.transform.localToWorldMatrix;
                     combine.Add(instance);
 
+                    /*
                     #region Pack UVs:
 
                     Vector2[] uv = mf.sharedMesh.uv;//RoundUV(mf.sharedMesh.uv);
@@ -47,23 +48,23 @@ public static class MeshCombiner
                         packedUV.Add(Vector2.MoveTowards(uv[i], Rect.NormalizedToPoint(atlasRect, Rect.PointToNormalized(uvRect, uv[i])), distance));
 
                         //OLD TRANSLATE METHOD:
-                        /*
                         //Get direction from the current point to the center of the current uv set:
-                        Vector2 heading = uv[i] - uvRect.center;
-                        Vector2 oldDirection = heading / heading.magnitude;
+                        //Vector2 heading = uv[i] - uvRect.center;
+                        //Vector2 oldDirection = heading / heading.magnitude;
                         //Translate the point to the new center by the same direction and distance offset that it had around the old center:
-                        packedUV.Add(new Vector2(oldDirection.x + distance, oldDirection.y + distance));
-                        */
+                        //packedUV.Add(new Vector2(oldDirection.x + distance, oldDirection.y + distance));
+                        
 
                     }
-
+                 
                     #endregion
+                    */
                 }
             }
 
             m.CombineMeshes(combine.ToArray(), true, true, false); //Note: why are normals sometimes flipped??
 
-            m.SetUVs(0, packedUV.ToArray());
+          //  m.SetUVs(0, packedUV.ToArray());
         }
         else
         {

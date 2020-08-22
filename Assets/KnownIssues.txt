@@ -29,5 +29,9 @@ BUGS:
 
 -On pressing return from the mesh inspector camera position and rotation are not reset, the camera orbit script overrides the values.
 
+-After saving a combined mesh to the library the mesh will have flipped normals after returning to build mode.
+
+-Mesh combiner does not atlas UVs.
+
 -------------------------------------------------------------
 Anything else marked "Bug" or "Note" in code comments could be looked at.

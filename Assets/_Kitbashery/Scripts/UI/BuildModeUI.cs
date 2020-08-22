@@ -33,6 +33,7 @@ public class BuildModeUI : MonoBehaviour
     [Header("Other Refrences:")]
     public KitbasheryMeshImporter importer;
     public ImportUIManager importUI;
+    public BrowserManager browserManager;
 
     [Header("Variables:")]
     [HideInInspector]
@@ -96,6 +97,8 @@ public class BuildModeUI : MonoBehaviour
         }
         else
         {
+            browserManager.DeselectItem();
+
             //Make sure if the user was in uv mode during the last mesh inspection that the settings are reset for build mode.
             //Note: not sure why MeshInspector.EndMeshInspection() does not fix this when return is pressed from mesh inspect mode, might be able to change the code there to the code here.
             if (orbitCam.uvView == true)
@@ -190,6 +193,7 @@ public class BuildModeUI : MonoBehaviour
                 part.rend.receiveShadows = false;
                 part.rend.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
                 part.rend.material = defaultMat;
+                part.rend.allowOcclusionWhenDynamic = false;
 
                 part.filter = go.AddComponent<MeshFilter>();
                 part.filter.sharedMesh = combine;
@@ -218,7 +222,7 @@ public class BuildModeUI : MonoBehaviour
 
     public void DestroySelected()
     {
-        for(int i = selectedParts.Count; i > 0; i--)
+        for(int i = selectedParts.Count - 1; i > 0; i--)
         {
             gizmo.RemoveTarget(selectedParts[i].transform);
             parts.Remove(selectedParts[i]);
