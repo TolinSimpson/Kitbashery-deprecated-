@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 968507705739597266}
   - component: {fileID: 240141580836593408}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: category label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Catagory Text Length
+  m_text: Category Text Length
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 5844307246036149831}
   - component: {fileID: -6507889073909625723}
   m_Layer: 5
-  m_Name: CatagoryUI
+  m_Name: CategoryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5d405911d8bbe4f8d7155f0e0b1c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catagoryLabel: {fileID: 240141580836593408}
-  catagoryPath: 
+  categoryLabel: {fileID: 240141580836593408}
+  categoryPath: 
   browserManager: {fileID: 0}
   button: {fileID: 5844307246036149831}

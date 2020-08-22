@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Catagory...
+  m_text: New Category...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'New Catagory:'
+  m_text: 'New Category:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2983,7 +2983,7 @@ GameObject:
   - component: {fileID: 155339890}
   - component: {fileID: 155339889}
   m_Layer: 5
-  m_Name: AddCatagoryPopup
+  m_Name: AddCategoryPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3816,7 +3816,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Add Catagory
+  m_text: Add Category
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4583,10 +4583,10 @@ MonoBehaviour:
   - {fileID: 1683994376}
   selectedUIColor: {r: 0, g: 1, b: 1, a: 0.5}
   selectedItem: {fileID: 0}
-  selectedCatagory: {fileID: 0}
+  selectedCategory: {fileID: 0}
   deletePopup: {fileID: 1549861917}
-  changeCatagoryPopup: {fileID: 655762444}
-  changeCatagoryDropdown: {fileID: 1986213952}
+  changeCategoryPopup: {fileID: 655762444}
+  changeCategoryDropdown: {fileID: 1986213952}
   searchbar: {fileID: 1575503280}
   nextPageButton: {fileID: 970470147}
   previousPageButton: {fileID: 240066652}
@@ -4596,7 +4596,7 @@ MonoBehaviour:
   pageOptions: {fileID: 1217425330}
   uiContainer: {fileID: 207674777}
   meshInspector: {fileID: 1427732976}
-  catagoryManager: {fileID: 405145189}
+  categoryManager: {fileID: 405145189}
   liveLink: {fileID: 1270609984}
   buildControls: {fileID: 496738085}
   currentPage: 1
@@ -6946,7 +6946,7 @@ GameObject:
   - component: {fileID: 405145188}
   - component: {fileID: 405145189}
   m_Layer: 5
-  m_Name: Catagory Manager
+  m_Name: Category Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6992,16 +6992,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c668bb3d6534b7c4aae94ee912abd0a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catagoryUI: {fileID: 7283718191092005891, guid: e8eb5550cbd7960468c0974950fe1511,
+  categoryUI: {fileID: 7283718191092005891, guid: e8eb5550cbd7960468c0974950fe1511,
     type: 3}
-  catagoryContainer: {fileID: 2016641600}
+  categoryContainer: {fileID: 2016641600}
   browserManager: {fileID: 277170268}
-  catagoryAddPopup: {fileID: 155339887}
-  catagoryDeletePopup: {fileID: 1078898023}
-  catagories: []
+  categoryAddPopup: {fileID: 155339887}
+  categoryDeletePopup: {fileID: 1078898023}
+  categories: []
   dropdownOptions: []
   modelsCount: 0
-  allCatagory: {fileID: 2715482964447832719}
+  allCategory: {fileID: 2715482964447832719}
   modelsPath: 
 --- !u!1 &406899739
 GameObject:
@@ -7269,7 +7269,7 @@ GameObject:
   - component: {fileID: 449800518}
   - component: {fileID: 449800517}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: import name text header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10402,7 +10402,7 @@ GameObject:
   - component: {fileID: 655762447}
   - component: {fileID: 655762446}
   m_Layer: 5
-  m_Name: ChangeCatagoryPopup
+  m_Name: ChangeCategoryPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11010,7 +11010,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Catagory Name...
+  m_text: Category Name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12359,7 +12359,7 @@ GameObject:
   - component: {fileID: 782134942}
   - component: {fileID: 782134941}
   m_Layer: 5
-  m_Name: apply
+  m_Name: Apply category change button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12429,7 +12429,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 277170268}
-        m_MethodName: MoveItemToCatagory
+        m_MethodName: MoveItemToCategory
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1986213952}
@@ -13070,7 +13070,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 405145189}
-        m_MethodName: DeleteCatagory
+        m_MethodName: DeleteCategory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13555,7 +13555,7 @@ GameObject:
   - component: {fileID: 862562783}
   - component: {fileID: 862562782}
   m_Layer: 5
-  m_Name: Catagory Scroll View
+  m_Name: Category Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14928,8 +14928,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Are you sure you want to delete the selected catagory? \nIts contents
-    will be moved to the \"uncatagorized\" catagory."
+  m_text: "Are you sure you want to delete the selected category? \nIts contents
+    will be moved to the \"uncategorized\" category."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15289,7 +15289,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 405145189}
-        m_MethodName: AddNewCatagory
+        m_MethodName: AddNewCategory
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1739642455}
@@ -16469,7 +16469,7 @@ GameObject:
   - component: {fileID: 1078898026}
   - component: {fileID: 1078898025}
   m_Layer: 5
-  m_Name: DeleteCatagoryPopup
+  m_Name: DeleteCategoryPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17500,7 +17500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Change Catagory
+  m_text: Change Category
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17613,7 +17613,7 @@ GameObject:
   - component: {fileID: 1191012512}
   - component: {fileID: 1191012511}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: New Category Dropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18727,7 +18727,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Change the catagory of the kitbashing part:'
+  m_text: 'Change the category of the kitbashing part:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -20099,7 +20099,7 @@ GameObject:
   - component: {fileID: 1390519642}
   - component: {fileID: 1390519641}
   m_Layer: 5
-  m_Name: Button-ChangeCatagory
+  m_Name: Button-ChangeCategory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20169,7 +20169,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 277170268}
-        m_MethodName: ShowChangeCatagoryPopup
+        m_MethodName: ShowChangeCategoryPopup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20483,7 +20483,7 @@ GameObject:
   - component: {fileID: 1417065239}
   - component: {fileID: 1417065238}
   m_Layer: 5
-  m_Name: Button-AddCatagory
+  m_Name: Button-AddCategory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22635,7 +22635,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Give your new catagory a name:'
+  m_text: 'Give your new category a name:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22885,7 +22885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Add Catagory
+  m_text: Add Category
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -24302,7 +24302,7 @@ MonoBehaviour:
   index: 
   current: {fileID: 0}
   importIndex: 0
-  catagoryManager: {fileID: 405145189}
+  categoryManager: {fileID: 405145189}
   nameInput: {fileID: 780805702}
   thumbnailCam: {fileID: 46992866}
   sizeSlider: {fileID: 1865790629}
@@ -24311,8 +24311,8 @@ MonoBehaviour:
   rotZSlider: {fileID: 1057253277}
   posXSlider: {fileID: 548328202}
   posYSlider: {fileID: 274423751}
-  catagoryList: {fileID: 1191012511}
-  newCatagory: {fileID: 1388110013}
+  categoryList: {fileID: 1191012511}
+  newCategory: {fileID: 1739642455}
   meshName: {fileID: 780805702}
   importCount: {fileID: 1470184109}
   importer: {fileID: 2072880734}
@@ -24403,7 +24403,7 @@ GameObject:
   - component: {fileID: 1677227590}
   - component: {fileID: 1677227589}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: Install Plugin Dropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25062,7 +25062,7 @@ GameObject:
   - component: {fileID: 1703965318}
   - component: {fileID: 1703965317}
   m_Layer: 5
-  m_Name: Button-AddCatagory
+  m_Name: Button-AddCategory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25581,7 +25581,7 @@ GameObject:
   - component: {fileID: 1739642456}
   - component: {fileID: 1739642455}
   m_Layer: 5
-  m_Name: New Catagory Input
+  m_Name: New Category Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25994,7 +25994,7 @@ GameObject:
   - component: {fileID: 1764016919}
   - component: {fileID: 1764016918}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: import category text header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26038,7 +26038,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Catagory:'
+  m_text: 'Category:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -27182,7 +27182,7 @@ GameObject:
   - component: {fileID: 1852232937}
   - component: {fileID: 1852232936}
   m_Layer: 5
-  m_Name: Button-DeleteCatagory
+  m_Name: Button-DeleteCategory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28160,7 +28160,7 @@ GameObject:
   - component: {fileID: 1917717894}
   - component: {fileID: 1917717895}
   m_Layer: 5
-  m_Name: New Catagory
+  m_Name: New Category
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29447,7 +29447,7 @@ GameObject:
   - component: {fileID: 1986213953}
   - component: {fileID: 1986213952}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: Change Category Dropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30044,7 +30044,7 @@ GameObject:
   - component: {fileID: 2016641600}
   - component: {fileID: 2016641601}
   m_Layer: 5
-  m_Name: Container
+  m_Name: Category Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32006,7 +32006,7 @@ GameObject:
   - component: {fileID: 968507707380691928}
   - component: {fileID: 240141580271483146}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: All Category Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32024,8 +32024,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5d405911d8bbe4f8d7155f0e0b1c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catagoryLabel: {fileID: 240141580271483146}
-  catagoryPath: 
+  categoryLabel: {fileID: 240141580271483146}
+  categoryPath: 
   browserManager: {fileID: 0}
   button: {fileID: 5844307245399588941}
 --- !u!224 &3607212046648119527
@@ -32143,7 +32143,7 @@ GameObject:
   - component: {fileID: 5844307245399588941}
   - component: {fileID: 2715482964447832719}
   m_Layer: 5
-  m_Name: All Catagory
+  m_Name: All Category
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

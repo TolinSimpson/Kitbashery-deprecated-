@@ -23,13 +23,13 @@ public class BrowserManager : MonoBehaviour
     public BrowserItem selectedItem;
 
     [HideInInspector]
-    public Catagory selectedCatagory;
+    public Category selectedCategory;
 
     public GameObject deletePopup;
 
-    public GameObject changeCatagoryPopup;
+    public GameObject changeCategoryPopup;
 
-    public TMP_Dropdown changeCatagoryDropdown;
+    public TMP_Dropdown changeCategoryDropdown;
 
     public TMP_InputField searchbar;
 
@@ -53,7 +53,7 @@ public class BrowserManager : MonoBehaviour
 
     public MeshInspector meshInspector;
 
-    public CatagoryManager catagoryManager;
+    public CategoryManager categoryManager;
 
     public LiveLink liveLink;
 
@@ -71,7 +71,7 @@ public class BrowserManager : MonoBehaviour
     /// </summary>
     private int itemTotal = 0;
 
-    private SortedDictionary<string, string> filteredCatagoryResults = new SortedDictionary<string, string>();
+    private SortedDictionary<string, string> filteredCategoryResults = new SortedDictionary<string, string>();
     private Dictionary<string, string> filteredSearchResults = new Dictionary<string, string>();
 
     #endregion
@@ -81,8 +81,8 @@ public class BrowserManager : MonoBehaviour
     private void Start()
     {
         SetItemManager();
-        catagoryManager.allCatagory.catagoryLabel.color = selectedUIColor;
-        FilterByCatagory(catagoryManager.allCatagory);
+        categoryManager.allCategory.categoryLabel.color = selectedUIColor;
+        FilterByCategory(categoryManager.allCategory);
         PopulateBrowser();
     }
 
@@ -262,34 +262,34 @@ public class BrowserManager : MonoBehaviour
             selectedItem.meshPath = string.Empty;
             selectedItem.thumbPath = string.Empty;
 
-            catagoryManager.modelsCount--;
-            catagoryManager.UpdateAssetCounts();
-            FilterByCatagory(selectedCatagory);
+            categoryManager.modelsCount--;
+            categoryManager.UpdateAssetCounts();
+            FilterByCategory(selectedCategory);
             PopulateBrowser();
         }
         deletePopup.SetActive(false);
     }
 
 
-    public void MoveItemToCatagory(TMP_Dropdown dropdown)
+    public void MoveItemToCategory(TMP_Dropdown dropdown)
     {
-        if(dropdown.options[dropdown.value].text != selectedCatagory.catagoryLabel.text)//If the selected catagory The catagory the selected item is already in.
+        if(dropdown.options[dropdown.value].text != selectedCategory.categoryLabel.text)//If the selected category The category the selected item is already in.
         {
-            string catagoryPath = catagoryManager.modelsPath + dropdown.options[dropdown.value].text + "/" + Path.GetFileName(Path.GetDirectoryName(selectedItem.meshPath));
-            /*if (!Directory.Exists(catagoryPath))
+            string categoryPath = categoryManager.modelsPath + dropdown.options[dropdown.value].text + "/" + Path.GetFileName(Path.GetDirectoryName(selectedItem.meshPath));
+            /*if (!Directory.Exists(categoryPath))
             {
                 Debug.LogError("Path invalid");//Note: Path may be invalid if the dropdown options text is not the proper case such as the first letter is capital when the file folder's is not.
             }*/
             string dirPath = Path.GetDirectoryName(selectedItem.meshPath);
 #if UNITY_EDITOR
-            File.Move(dirPath + ".meta", catagoryPath + ".meta");
+            File.Move(dirPath + ".meta", categoryPath + ".meta");
 #endif
-            Directory.Move(dirPath, catagoryPath);
-            catagoryManager.UpdateAssetCounts();
+            Directory.Move(dirPath, categoryPath);
+            categoryManager.UpdateAssetCounts();
             PopulateBrowser();
         }
        
-        changeCatagoryPopup.SetActive(false);
+        changeCategoryPopup.SetActive(false);
     }
 
     #endregion
@@ -297,37 +297,37 @@ public class BrowserManager : MonoBehaviour
     #region Item Filter Functions:
 
     /// <summary>
-    /// Gets all directories under a catagories path and stores their name for search filtering along with the directory path as reference for loading thumbnails and meshes.
+    /// Gets all directories under a categories path and stores their name for search filtering along with the directory path as reference for loading thumbnails and meshes.
     /// </summary>
     /// <param name="filter"></param>
-    public void FilterByCatagory(Catagory filter)
+    public void FilterByCategory(Category filter)
     {
-        filteredCatagoryResults.Clear();
+        filteredCategoryResults.Clear();
 
-        if(filter == catagoryManager.allCatagory)
+        if(filter == categoryManager.allCategory)
         {
-            //Make sure catagories have been generated:
-            if(catagoryManager.catagories.Count == 0)
+            //Make sure categories have been generated:
+            if(categoryManager.categories.Count == 0)
             {
-                catagoryManager.GetCatagories();
+                categoryManager.GetCatagories();
             }
 
-            //Filter through all catagories:
-            foreach (Catagory catagory in catagoryManager.catagories)
+            //Filter through all categories:
+            foreach (Category category in categoryManager.categories)
             {
-                if(catagory != catagoryManager.allCatagory)
+                if(category != categoryManager.allCategory)
                 {
-                    foreach (string dir in Directory.GetDirectories(catagory.catagoryPath))
+                    foreach (string dir in Directory.GetDirectories(category.categoryPath))
                     {
                         //Add filename (directory folder name) for filtering (should be the same as the mesh name) and make sure it has a unique name if another file in another directory has the same name.
                         string filename = Path.GetFileName(dir);
-                        if (!filteredCatagoryResults.Keys.Contains(filename))
+                        if (!filteredCategoryResults.Keys.Contains(filename))
                         {
-                            filteredCatagoryResults.Add(filename, dir);
+                            filteredCategoryResults.Add(filename, dir);
                         }
                         else
                         {
-                            filteredCatagoryResults.Add(filename + filteredCatagoryResults.GetHashCode(), dir); //Note: the hashcode should make it unique but will mess with the searchbar filter.
+                            filteredCategoryResults.Add(filename + filteredCategoryResults.GetHashCode(), dir); //Note: the hashcode should make it unique but will mess with the searchbar filter.
                         }
                     }
                 }
@@ -335,40 +335,40 @@ public class BrowserManager : MonoBehaviour
         }
         else
         {
-            //Filter through just the input filter catagory:
-            foreach (string dir in Directory.GetDirectories(filter.catagoryPath))
+            //Filter through just the input filter category:
+            foreach (string dir in Directory.GetDirectories(filter.categoryPath))
             {
                 string filename = Path.GetFileName(dir);
-                if (!filteredCatagoryResults.Keys.Contains(filename))
+                if (!filteredCategoryResults.Keys.Contains(filename))
                 {
-                    filteredCatagoryResults.Add(filename, dir);
+                    filteredCategoryResults.Add(filename, dir);
                 }
                 else
                 {
-                    filteredCatagoryResults.Add(filename + filteredCatagoryResults.GetHashCode(), dir);
+                    filteredCategoryResults.Add(filename + filteredCategoryResults.GetHashCode(), dir);
                 }
             }
         }
     }
 
     /// <summary>
-    /// Filters items to display by the searchbar filter (filters through filtered catagories)
+    /// Filters items to display by the searchbar filter (filters through filtered categories)
     /// </summary>
     private void FilterBySearch()
     {
         filteredSearchResults.Clear();
 
-        //TODO: Is a check if filteredCatagoryResults.Count > 0 nessesary?
+        //TODO: Is a check if filteredCategoryResults.Count > 0 nessesary?
 
         if (searchbar.text != string.Empty)
         {
-            foreach (string str in filteredCatagoryResults.Keys)
+            foreach (string str in filteredCategoryResults.Keys)
             {
                 if (str.StartsWith(searchbar.text, StringComparison.OrdinalIgnoreCase)) //str.Contains(searchbar.text))
                 {
                     if (!filteredSearchResults.ContainsKey(str))
                     {
-                        filteredSearchResults.Add(str, filteredCatagoryResults[str]);
+                        filteredSearchResults.Add(str, filteredCategoryResults[str]);
                     }
                 }
             }
@@ -376,9 +376,9 @@ public class BrowserManager : MonoBehaviour
         else
         {
             //Note: it seems you cant set a dictionary to another dictionary without linking them so iterate:
-            foreach(string str in filteredCatagoryResults.Keys)
+            foreach(string str in filteredCategoryResults.Keys)
             {
-                filteredSearchResults.Add(str, filteredCatagoryResults[str]);
+                filteredSearchResults.Add(str, filteredCategoryResults[str]);
             }
         }
     }
@@ -422,15 +422,15 @@ public class BrowserManager : MonoBehaviour
         deletePopup.SetActive(true);
     }
 
-    public void ShowChangeCatagoryPopup()
+    public void ShowChangeCategoryPopup()
     {
-        changeCatagoryDropdown.options.Clear();
-        if(catagoryManager.dropdownOptions.Count == 0)
+        changeCategoryDropdown.options.Clear();
+        if(categoryManager.dropdownOptions.Count == 0)
         {
-            catagoryManager.UpdateCatagoryDropdownOptions();
+            categoryManager.UpdateCategoryDropdownOptions();
         }
-        changeCatagoryDropdown.options = catagoryManager.dropdownOptions;
-        changeCatagoryPopup.SetActive(true);
+        changeCategoryDropdown.options = categoryManager.dropdownOptions;
+        changeCategoryPopup.SetActive(true);
     }
 
     public void SendLiveLink()

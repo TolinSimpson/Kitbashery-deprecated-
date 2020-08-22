@@ -23,11 +23,9 @@ BUGS:
 
 -Blender live link throws missing bl_rna when the addon is enabled in blender.
 
--All catagory does not update after an import. (needs verification, may be just in the Unity Editor) likely needs a wait to check if/when the files have been saved to the users computer before updating the browser.
+-All category does not update after an import. (needs verification, may be just in the Unity Editor) likely needs a wait to check if/when the files have been saved to the users computer before updating the browser.
 
--Results don't update when an item is moved to another catagory.
-
--Change catagory dropdown text is stretched.
+-Results don't update when an item is moved to another category.
 
 -On pressing return from the mesh inspector camera position and rotation are not reset, the camera orbit script overrides the values.
 

@@ -33,7 +33,7 @@ public class ImportUIManager : MonoBehaviour
     [HideInInspector]
     public int importIndex = 0;
 
-    public CatagoryManager catagoryManager;
+    public CategoryManager categoryManager;
 
     [Header("Import Settings UI:")]
 
@@ -53,9 +53,9 @@ public class ImportUIManager : MonoBehaviour
 
     public Slider posYSlider;
 
-    public TMP_Dropdown catagoryList;
+    public TMP_Dropdown categoryList;
 
-    public TMP_InputField newCatagory;
+    public TMP_InputField newCategory;
 
     public TMP_InputField meshName;
 
@@ -74,7 +74,7 @@ public class ImportUIManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateCatagoryDropdown();
+        UpdateCategoryDropdown();
 
         gameObject.SetActive(false);
         thumbnailCam.gameObject.SetActive(false);
@@ -83,8 +83,8 @@ public class ImportUIManager : MonoBehaviour
     private void OnEnable()
     {
         thumbnailCam.gameObject.SetActive(true);
-        catagoryManager.UpdateCatagoryDropdownOptions();
-        catagoryList.options = catagoryManager.dropdownOptions;
+        categoryManager.UpdateCategoryDropdownOptions();
+        categoryList.options = categoryManager.dropdownOptions;
     }
 
     #endregion
@@ -118,7 +118,7 @@ public class ImportUIManager : MonoBehaviour
         current.transform.localScale = Vector3.one;
         current.name = nameInput.text;
 
-        string savePath = Application.streamingAssetsPath + "/models/" + catagoryList.options[catagoryList.value].text + "/" + nameInput.text; //Create a folder with the name of the mesh under the selected catagory directory.
+        string savePath = Application.streamingAssetsPath + "/models/" + categoryList.options[categoryList.value].text + "/" + nameInput.text; //Create a folder with the name of the mesh under the selected category directory.
 
         //If a directory with the same name already exists add a unique number on the end.
         if (Directory.Exists(savePath))
@@ -132,7 +132,7 @@ public class ImportUIManager : MonoBehaviour
 
         SaveThumbnail(savePath);
 
-        catagoryManager.modelsCount++;
+        categoryManager.modelsCount++;
 
         ImportNext();
     }
@@ -173,10 +173,10 @@ public class ImportUIManager : MonoBehaviour
         if (imports.Count > 0)
         {
             //Update Browser:
-            catagoryManager.GetCatagories();
-            catagoryManager.browserManager.FilterByCatagory(catagoryManager.browserManager.selectedCatagory);
-            catagoryManager.browserManager.PopulateBrowser();//BUG: browser doesnt appear populated this may just be the "all" tab or there needs to be a wait/check untill files have been created. This may also just be in the Unity editor.
-            catagoryList.value = 0;
+            categoryManager.GetCatagories();
+            categoryManager.browserManager.FilterByCategory(categoryManager.browserManager.selectedCategory);
+            categoryManager.browserManager.PopulateBrowser();//BUG: browser doesnt appear populated this may just be the "all" tab or there needs to be a wait/check untill files have been created. This may also just be in the Unity editor.
+            categoryList.value = 0;
 
             importIndex = 0;
             imports.Clear();
@@ -203,7 +203,7 @@ public class ImportUIManager : MonoBehaviour
 
             imports.Clear();
 
-            catagoryManager.UpdateAssetCounts();
+            categoryManager.UpdateAssetCounts();
             CloseImportUI();
         }
         else
@@ -217,17 +217,17 @@ public class ImportUIManager : MonoBehaviour
         ResetSliders();
     }
 
-    public void AddNewCatagory()
+    public void AddNewCategory()
     {
-        catagoryManager.AddNewCatagory(newCatagory);
-        UpdateCatagoryDropdown();
+        categoryManager.AddNewCategory(newCategory);
+        UpdateCategoryDropdown();
     }
 
-    public void UpdateCatagoryDropdown()
+    public void UpdateCategoryDropdown()
     {
-        catagoryList.options.Clear();
-        catagoryManager.UpdateCatagoryDropdownOptions();
-        catagoryList.options = catagoryManager.dropdownOptions;
+        categoryList.options.Clear();
+        categoryManager.UpdateCategoryDropdownOptions();
+        categoryList.options = categoryManager.dropdownOptions;
     }
 
     /// <summary>
