@@ -3,7 +3,7 @@ Kitbashery is a desktop application made in Unity for managing large 3D kitbashi
 
 
 
-Kitbashery is released under the GNU GPL V3 License
+Kitbashery is released under the GPL-3.0 License
 
 Parts of Kitbashery have been kitbashed together using in full or in part the following 3rd party solutions:
 <br>
