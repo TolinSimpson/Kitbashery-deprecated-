@@ -94,6 +94,7 @@ public class BuildModeUI : MonoBehaviour
         if(toggle == false)
         {
             orbitCam.target = null;
+            selectedParts.Clear();
         }
         else
         {
@@ -222,20 +223,13 @@ public class BuildModeUI : MonoBehaviour
 
     public void DestroySelected()
     {
-        for(int i = selectedParts.Count - 1; i > 0; i--)
+        for(int i = selectedParts.Count - 1; i >= 0; i--)
         {
             gizmo.RemoveTarget(selectedParts[i].transform);
-            parts.Remove(selectedParts[i]);
             //TODO: remove hierarchy item.
             Destroy(selectedParts[i].gameObject);
+            parts.RemoveAt(i);
             selectedParts.Remove(selectedParts[i]);
-        }
-        foreach (KitbashPart part in selectedParts)
-        {
-            gizmo.RemoveTarget(part.transform);
-            Destroy(part.gameObject);
-            parts.Remove(part);
-            //TODO: remove hierarchy item.
         }
     }
 
