@@ -1,9 +1,13 @@
-
-Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
-
-Kitbashery is made in <a href="https://unity.com/">Unity 3D</a> with desktop platforms (Windows, Mac, Linux) in mind on Unity 2019.43f1 LTS
+<h1><b>DESCRIPTION:</b></h1>
 <br>
-Kitbashery Unity requires the following packages to be installed via the package manager to run:
+Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
+<br>
+
+<h1><b>INSTALLATION:</b></h1>
+<br>
+Kitbashery is made in <a href="https://unity.com/">Unity 3D</a> for desktop platforms (Windows, Mac, Linux) using Unity 2019.4x LTS
+<br>
+Note that Kitbashery's Unity project requires the following packages to be installed via the package manager to run:
 <ul>
   <li>Mathematics</li>
   <li>Burst</li>
@@ -13,8 +17,12 @@ Kitbashery Unity requires the following packages to be installed via the package
   <li><a href="https://github.com/eastskykang/UnityMeshImporter">Unity Mesh Importer</a></li>
 </ul>
 
+<h1><b>LICENSING:</b></h1>
 
 <b>Kitbashery is released under the GPL-3.0 License</b>
+<br>
+<br>
+<b>All assets (.obj and .jpg) included in Kitbashery's 3D model library inside the SteamingAssets folder are under the CC0 License.</b>
 
 Parts of Kitbashery have been kitbashed together using in full or in part the following 3rd party solutions:
 <br>
@@ -45,3 +53,6 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
 <li>CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)</li>
 </ul>
+
+<br>
+<i>The name Kitbashery and all associated branding and logos are are under copyright ©2020 Tolin Simpson all rights reserved.</i>
