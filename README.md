@@ -16,7 +16,7 @@ Kitbashery Unity requires the following packages to be installed via the package
 
 <b>Kitbashery is released under the GPL-3.0 License</b>
 <br>
-<b>All assets (.obj and .jpg) included in Kitbashery's 3D model library inside the SteamingAssets folder are under the CC0 Licnese.</b>
+<b>All assets (.obj and .jpg) included in Kitbashery's 3D model library inside the SteamingAssets folder are under the CC0 License.</b>
 
 Parts of Kitbashery have been kitbashed together using in full or in part the following 3rd party solutions:
 <br>
