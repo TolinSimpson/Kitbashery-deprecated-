@@ -1,9 +1,20 @@
 
 Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
 
+Kitbashery is made in <a href="https://unity.com/">Unity 3D</a> with desktop platforms (Windows, Mac, Linux) in mind on Unity 2019.43f1 LTS
+<br>
+Kitbashery Unity requires the following packages to be installed via the package manager to run:
+<ul>
+  <li>Mathematics</li>
+  <li>Burst</li>
+  <li>Jobs</li>
+  <li>TextMeshPro</li>
+  <li>ProBuilder</li>
+  <li><a href="https://github.com/eastskykang/UnityMeshImporter">Unity Mesh Importer</a></li>
+</ul>
 
 
-Kitbashery is released under the GPL-3.0 License
+<b>Kitbashery is released under the GPL-3.0 License</b>
 
 Parts of Kitbashery have been kitbashed together using in full or in part the following 3rd party solutions:
 <br>
