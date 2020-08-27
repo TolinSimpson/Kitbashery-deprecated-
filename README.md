@@ -1,7 +1,7 @@
 
 Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
 
-Kitbashery is made in <a href="https://unity.com/">Unity 3D</a> with desktop platforms (Windows, Mac, Linux) in mind on Unity 2019.43f1 LTS
+Kitbashery is made in <a href="https://unity.com/">Unity 3D</a> for desktop platforms (Windows, Mac, Linux) using Unity 2019.4x LTS
 <br>
 Kitbashery Unity requires the following packages to be installed via the package manager to run:
 <ul>
@@ -45,3 +45,6 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
 <li>CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)</li>
 </ul>
+
+<br>
+<i>The name Kitbashery and all associated branding and logos are are under copyright ©2020 Tolin Simpson all rights reserved.</i>
