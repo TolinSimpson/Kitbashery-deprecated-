@@ -5,6 +5,8 @@ Kitbashery is a desktop application made in Unity for managing large 3D kitbashi
 
 <h1><b>INSTALLATION:</b></h1>
 <br>
+Executables can be found under releases.
+<br>
 Kitbashery is made in <a href="https://unity.com/">Unity 3D</a> for desktop platforms (Windows, Mac, Linux) using Unity 2019.4x LTS
 <br>
 Note that Kitbashery's Unity project requires the following packages to be installed via the package manager to run:
