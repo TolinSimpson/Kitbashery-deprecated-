@@ -10,7 +10,6 @@ using SFB;
 
 namespace Kitbashery
 {
-
     /// <summary>
     /// Manages the UI for importing meshes into Kitbashery.
     /// </summary>

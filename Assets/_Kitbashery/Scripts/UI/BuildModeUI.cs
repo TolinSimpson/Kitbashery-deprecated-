@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder;
+using UnityEngine.ProBuilder.MeshOperations;
 using RuntimeGizmos;
 
 //Kitbashery © 2020 Tolin Simpson 
@@ -155,7 +157,7 @@ namespace Kitbashery
             AddHierarchyItem(part);
 
             gizmo.transformType = TransformType.Move;
-            gizmo.SetTranslatingAxis(TransformType.Move, Axis.Any);
+            gizmo.SetTranslatingAxis(TransformType.Move, RuntimeGizmos.Axis.Any);
             gizmo.AddTarget(part.gameObject.transform);
             //orbit.target = part.go.transform;
             ToggleBuildMode(true);
@@ -174,17 +176,19 @@ namespace Kitbashery
 
                 if (filters.Count > 0)
                 {
-                    Mesh combine = MeshCombiner.CombineMeshes(filters);
+                    Mesh combine = MeshCombiner.CombineMeshes(filters, false);
 
                     combine.Optimize();
                     combine.RecalculateBounds();
 
                     DestroySelected();
 
+                    //Create part:
                     GameObject go = new GameObject("Combined Part");
-
                     KitbashPart part = go.AddComponent<KitbashPart>();
                     part.transform.SetParent(kitbash.transform);
+
+                    //Create renderer:
                     part.rend = part.gameObject.AddComponent<MeshRenderer>();
                     part.rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                     part.rend.receiveShadows = false;
@@ -192,18 +196,33 @@ namespace Kitbashery
                     part.rend.material = defaultMat;
                     part.rend.allowOcclusionWhenDynamic = false;
 
+                    //Assign mesh:
                     part.filter = go.AddComponent<MeshFilter>();
                     part.filter.sharedMesh = combine;
+
+                    //Merge vertices if the mesh combine did not preserver welded vertices:
+                    //https://answers.unity.com/questions/44208/merge-vertices-at-runtime.html
+                    //Apply mesh corrections via probuilder:               
+                    /*ProBuilderMesh pbm = go.AddComponent<ProBuilderMesh>();
+                    MeshImporter importer = new MeshImporter(pbm);
+                    importer.Import(part.filter.sharedMesh);
+                    pbm.ToMesh();
+
+                    //pbm.WeldVertices(pbm.selectedFaceIndexes, 0.001f); //Only welds one corner of each triangle
+
+                    pbm.Refresh();*/
+
+
 
                     part.original = combine;
                     part.col = part.gameObject.AddComponent<MeshCollider>();
                     part.col.sharedMesh = combine;
-                    parts.Add(part);
 
+                    parts.Add(part);
                     AddHierarchyItem(part);
 
                     gizmo.transformType = TransformType.Move;
-                    gizmo.SetTranslatingAxis(TransformType.Move, Axis.Any);
+                    gizmo.SetTranslatingAxis(TransformType.Move, RuntimeGizmos.Axis.Any);
                     gizmo.AddTarget(part.gameObject.transform);
                 }
                 else
