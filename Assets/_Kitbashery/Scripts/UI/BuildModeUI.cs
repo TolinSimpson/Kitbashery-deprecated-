@@ -266,18 +266,34 @@ namespace Kitbashery
 
         public void SaveToLibrary()
         {
-            GameObject copy = Instantiate(kitbash);
-            for (int i = 0; i < copy.transform.childCount; i++)
+            //Create a copy of every mesh in the kitbash: (We can't use Instantiate(kitbash) to create a copy because we need unique mesh instances):
+            GameObject copy = new GameObject();//Note: may be able to get rid of the parent copy gameobject and transform the original child positions to world space since this partent is only to keep the transform values consistant.
+
+            for (int i = 0; i < kitbash.transform.childCount; i++)
             {
-                GameObject child = copy.transform.GetChild(i).gameObject;
-                if (child.activeSelf == true)
+                GameObject childOriginal = kitbash.transform.GetChild(i).gameObject;
+                if (childOriginal.activeSelf == true)
                 {
-                    importUI.imports.Add(child);
-                    child.SetActive(false);
-                }
-                else
-                {
-                    Destroy(child);
+                    GameObject childCopy = new GameObject(childOriginal.name.TrimEnd("(Clone)".ToCharArray()));
+
+                    MeshFilter mf = childCopy.AddComponent<MeshFilter>();
+                    childCopy.AddComponent<MeshRenderer>().material = defaultMat;
+                    childCopy.transform.SetParent(copy.transform);
+                    childCopy.transform.position = childOriginal.transform.position;
+                    childCopy.transform.rotation = childOriginal.transform.rotation;
+                    childCopy.transform.localScale = childOriginal.transform.localScale;
+
+                    Mesh original = childOriginal.GetComponent<MeshFilter>().sharedMesh;
+                    Mesh newMesh = new Mesh();
+                    newMesh.SetVertices(original.vertices);
+                    newMesh.SetUVs(0, original.uv);
+                    newMesh.SetNormals(original.normals);
+                    newMesh.SetTriangles(original.triangles, 0);
+                    newMesh.Optimize();
+                    mf.sharedMesh = newMesh;
+
+                    childCopy.SetActive(false);
+                    importUI.imports.Add(childCopy);
                 }
             }
 
@@ -294,6 +310,11 @@ namespace Kitbashery
 
             ToggleBuildMode(false);
             importUI.gameObject.SetActive(true);
+        }
+
+        public void FlipNormals()
+        {
+          //  OBJExport.FlipNormals()
         }
 
         public void ExportMesh()
