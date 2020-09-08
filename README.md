@@ -47,7 +47,6 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 
 <ul>
 <li>NormalSmoothing.shader by unknownAuthor (Source: http://wiki.unity3d.com/index.php/NormalSmoothing)</li>
-<li>TextureExtension.cs by Bunny83 (Source: http://wiki.unity3d.com/index.php/TextureFloodFill)</li>
 <li>TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)</li>
 <li>ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)</li>
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
