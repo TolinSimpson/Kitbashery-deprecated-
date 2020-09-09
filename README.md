@@ -20,10 +20,10 @@ Note that Kitbashery's Unity project requires the following packages to be insta
 
 <h1><b>Contributing:</b></h1>
 To contribute code to the project create a pull request of the Latest-Experimental branch.
-
+<br>
 To contribute 3D models to the project import your models via the importer while in playmode of the Unity project. Create a pull request to the experimental branch via the "Github For Unity" plugin that is preinstalled in the Unity project. Push your changes to the SteamingAssets folder to the experimental branch.
 
-Make sure your 3D model must has flawless normal smoothing and UV mapping since we don't want errors to persist in derivitive works of the users.
+Make sure your 3D model has flawless normal smoothing and UV mapping since we don't want errors to persist in derivitive works of the users.
 
 Be aware that by adding your mesh to the project you acknowledge that you are the owner/creator of the source mesh and hereby freely release the mesh under the CC0 licnese and that Kitbashery is not required to credit your contribution (Although we try our best to). Any meshes that are not up to quality or are deemed innapropriate or infringing on copyright of another work will not be merged to the experimental branch.
 <br>
