@@ -1,13 +1,14 @@
 <h1><b>DESCRIPTION:</b></h1>
-<br>
-Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
 
+Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
+<br>
+<h1><b>INSTALLATION:</b></h1>
+Executables can be found under releases.
+<br>
+<br>
 Kitbashery is made in <a href="https://unity.com/">Unity 3D</a> for desktop platforms (Windows, Mac, Linux) using Unity 2019.4x LTS
 <br>
-
-<h1><b>INSTALLATION:</b></h1>
-<br>
-Kitbashery's Unity project requires the following packages to be installed via the package manager to run:
+Note that Kitbashery's Unity project requires the following packages to be installed via the package manager to run:
 <ul>
   <li>Mathematics</li>
   <li>Burst</li>
@@ -46,9 +47,7 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 
 <ul>
 <li>NormalSmoothing.shader by unknownAuthor (Source: http://wiki.unity3d.com/index.php/NormalSmoothing)</li>
-<li>TextureExtension.cs by Bunny83 (Source: http://wiki.unity3d.com/index.php/TextureFloodFill)</li>
 <li>TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)</li>
-<li>Dialate.shader by sneha-belkhale (Github: https://github.com/sneha-belkhale/shader-bake-unity)</li>
 <li>ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)</li>
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
 <li>CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)</li>

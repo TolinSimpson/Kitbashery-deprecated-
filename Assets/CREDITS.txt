@@ -18,9 +18,7 @@ Github for Unity by Github Inc. (MIT license, Github: https://github.com/github-
 
 INDAVIDUAL FILES:
 NormalSmoothing.shader by unknownAuthor (Source: http://wiki.unity3d.com/index.php/NormalSmoothing)
-TextureExtension.cs by Bunny83 (Source: http://wiki.unity3d.com/index.php/TextureFloodFill)
 TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)
-Dialate.shader by sneha-belkhale (Github: https://github.com/sneha-belkhale/shader-bake-unity)
 ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)
 UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)
 CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)
