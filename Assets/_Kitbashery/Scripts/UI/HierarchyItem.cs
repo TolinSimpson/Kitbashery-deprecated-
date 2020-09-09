@@ -3,43 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// A UI item in the hierarchy of the Kitbash in build mode.
-/// </summary>
-public class HierarchyItem : MonoBehaviour
+//Kitbashery © 2020 Tolin Simpson 
+//Code released under GNU General Public License v3.0 see licnese file for full details.
+
+namespace Kitbashery
 {
-    public TMP_Text itemName;
-
-    public KitbashPart part;
-    [HideInInspector]
-    public BuildModeUI buildControls;
-
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// A UI item in the hierarchy of the Kitbash in build mode.
+    /// </summary>
+    public class HierarchyItem : MonoBehaviour
     {
-        
-    }
+        public TMP_Text itemName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        public KitbashPart part;
+        [HideInInspector]
+        public BuildModeUI buildControls;
 
-    public void ToggleSelection()
-    {
-        /*if(buildControls.selectedParts.Contains(part))
+        // Start is called before the first frame update
+        void Start()
         {
-           // buildControls.DeselectParts();
+
         }
-        else
+
+        // Update is called once per frame
+        void Update()
         {
-            buildControls.selectedParts.Add(part);
-        }*/
+
+        }
+
+        public void ToggleSelection()
+        {
+            /*if(buildControls.selectedParts.Contains(part))
+            {
+               // buildControls.DeselectParts();
+            }
+            else
+            {
+                buildControls.selectedParts.Add(part);
+            }*/
+        }
+
+        public void SetText()
+        {
+            itemName.text = part.name;
+        }
     }
 
-    public void SetText()
-    {
-        itemName.text = part.name;
-    }
 }
