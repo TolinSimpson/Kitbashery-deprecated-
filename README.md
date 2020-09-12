@@ -19,7 +19,7 @@ Note that Kitbashery's Unity project requires the following packages to be insta
 </ul>
 
 <h1><b>Contributing:</b></h1>
-To contribute code to the project create a pull request of the Latest-Experimental branch.
+To contribute code to the project create a pull request of the Latest-Experimental branch. Be sure to add your changes to the changelog in the assets folder.
 <br>
 <br>
 To contribute 3D models to the project import your models via the importer while in playmode of the Unity project. Create a pull request to the experimental branch via the "Github For Unity" plugin that is preinstalled in the Unity project. Push your changes to the SteamingAssets folder to the experimental branch.
