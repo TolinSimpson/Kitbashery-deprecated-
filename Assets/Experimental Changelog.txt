@@ -11,6 +11,7 @@ Version 1.0.4
 
 -Fixed import UI add category button.
 -Fixed drill and bulb UV unwrapping.
+-Fixed inspecting a mesh now has the correct camera distance from it no matter its size.
 
 -Changed default values of build mode's snapping options are now scales of 1 for scale and translation and 90 degrees for rotation.
 
