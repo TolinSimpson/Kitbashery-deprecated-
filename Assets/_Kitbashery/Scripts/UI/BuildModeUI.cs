@@ -47,6 +47,7 @@ namespace Kitbashery
         public GameObject currentImport;
         public List<KitbashPart> parts = new List<KitbashPart>();
         public List<KitbashPart> selectedParts = new List<KitbashPart>();
+        private List<KitbashPart> copiedParts = new List<KitbashPart>();
         public Material defaultMat;
 
         #endregion
@@ -78,6 +79,18 @@ namespace Kitbashery
                     }
                 }
             }
+
+            if((Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.RightControl)) && Input.GetKeyUp(KeyCode.C))
+            {
+                CopySelected();
+            }
+
+            if (copiedParts.Count > 0 && ((Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.RightControl)) && Input.GetKeyUp(KeyCode.V)))
+            {
+                PasteSelected();
+            }
+
+
 
             //Delete selection.
             if (Input.GetKeyUp(KeyCode.Delete))
@@ -234,6 +247,20 @@ namespace Kitbashery
             {
                 Debug.Log("Not enough parts selected.");
             }
+        }
+
+        public void CopySelected()
+        {
+            //Note: may have to store instances of each mesh from each part to avoid the user deleting the original shared mesh and breaking part copies if done via instantiate.
+            foreach(KitbashPart part in selectedParts)
+            {
+                copiedParts.Add(part);
+            }
+        }
+
+        public void PasteSelected()
+        {
+
         }
 
         public void DestroySelected()

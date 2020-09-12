@@ -1,0 +1,17 @@
+Version 1.0.4
+
+-Added this changelog.
+-Added aircraft category.
+-Added aircraft wing mesh.
+-Added aircraft kitbash example.
+-Added support for copy/paste in build mode (WIP).
+-Added escape menu.
+-Added save prompt on exit.
+-Added in-app credits.
+
+-Fixed import UI add category button.
+-Fixed drill and bulb UV unwrapping.
+
+-Changed default values of build mode's snapping options are now scales of 1 for scale and translation and 90 degrees for rotation.
+
+-Removed unsed UV map camera from the scene.
