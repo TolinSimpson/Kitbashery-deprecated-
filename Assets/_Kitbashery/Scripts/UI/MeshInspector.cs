@@ -45,6 +45,8 @@ namespace Kitbashery
             {
                 importer.mode = KitbasheryMeshImporter.kitbasheryUIMode.inspector;
                 importer.ImportSingle(meshPath);
+
+                orbitCam.distance = filter.sharedMesh.bounds.size.x + 5;
             }
         }
 
