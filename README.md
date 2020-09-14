@@ -13,13 +13,16 @@ Note that Kitbashery's Unity project requires the following packages to be insta
   <li>Mathematics</li>
   <li>Burst</li>
   <li>Jobs</li>
+  <li>Core RP Library</li>
+  <li>Lightweight RP (Universal RP)</li>
+  <li>Shader Graph</li>
   <li>TextMeshPro</li>
   <li>ProBuilder</li>
   <li><a href="https://github.com/eastskykang/UnityMeshImporter">Unity Mesh Importer</a></li>
 </ul>
 
 <h1><b>Contributing:</b></h1>
-To contribute code to the project create a pull request of the Latest-Experimental branch.
+To contribute code to the project create a pull request of the Latest-Experimental branch. Be sure to add your changes to the changelog in the assets folder.
 <br>
 <br>
 To contribute 3D models to the project import your models via the importer while in playmode of the Unity project. Create a pull request to the experimental branch via the "Github For Unity" plugin that is preinstalled in the Unity project. Push your changes to the SteamingAssets folder to the experimental branch.
@@ -62,8 +65,9 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>NormalSmoothing.shader by unknownAuthor (Source: http://wiki.unity3d.com/index.php/NormalSmoothing)</li>
 <li>TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)</li>
 <li>ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)</li>
+<li>TextureExtensions.cs by Bunny83 (Source: http://wiki.unity3d.com/index.php?title=TextureFloodFill)</li>
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
-<li>CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)</li>
+<li>Dilate.shader by Sneha Belkhale (Github: https://github.com/sneha-belkhale/shader-bake-unity)</li>
 </ul>
 
 <br>
