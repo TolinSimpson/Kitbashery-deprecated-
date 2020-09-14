@@ -13,6 +13,9 @@ Note that Kitbashery's Unity project requires the following packages to be insta
   <li>Mathematics</li>
   <li>Burst</li>
   <li>Jobs</li>
+  <li>Core RP Library</li>
+  <li>Lightweight RP</li>
+  <li>Shader Graph</li>
   <li>TextMeshPro</li>
   <li>ProBuilder</li>
   <li><a href="https://github.com/eastskykang/UnityMeshImporter">Unity Mesh Importer</a></li>
@@ -64,6 +67,7 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)</li>
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
 <li>CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)</li>
+<li>Dilate.shader by Sneha Belkhale (Github: https://github.com/sneha-belkhale/shader-bake-unity)
 </ul>
 
 <br>
