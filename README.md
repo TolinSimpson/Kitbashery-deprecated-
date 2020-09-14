@@ -14,7 +14,7 @@ Note that Kitbashery's Unity project requires the following packages to be insta
   <li>Burst</li>
   <li>Jobs</li>
   <li>Core RP Library</li>
-  <li>Lightweight RP (Universal RP)</li>
+  <li>Universal RP</li>
   <li>Shader Graph</li>
   <li>TextMeshPro</li>
   <li>ProBuilder</li>
