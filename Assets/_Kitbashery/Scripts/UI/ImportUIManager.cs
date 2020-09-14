@@ -144,19 +144,13 @@ namespace Kitbashery
             if (thumbnailCam.targetTexture != null)
             {
                 //Convert to Texture2D:
-                Texture2D tex = new Texture2D(thumbnailCam.targetTexture.width, thumbnailCam.targetTexture.height, TextureFormat.RGB24, false);
-                RenderTexture.active = thumbnailCam.targetTexture;
-                tex.ReadPixels(new Rect(0, 0, thumbnailCam.targetTexture.width, thumbnailCam.targetTexture.height), 0, 0);
-                tex.Apply();
+                Texture2D tex = TextureExporter.ToTexture2D(thumbnailCam.targetTexture);
 
                 //Shrink:
                 TextureScale.Bilinear(tex, thumbnailResolution, thumbnailResolution);
 
-                //Debug.Log(tex.EncodeToJPG().Length + " < jpg, png > " +tex.EncodeToPNG().Length); //What is smaller for the size, jpg or png?
-
                 //Save:
-                byte[] bytes = tex.EncodeToJPG(100);
-                File.WriteAllBytes(savePath + "/" + current.name + "_Thumbnail.jpg", bytes);
+                TextureExporter.SaveTexture2D(tex, current.name + "_Thumbnail.jpg", TextureExporter.SaveTextureFormat.jpg, savePath);
             }
             else
             {

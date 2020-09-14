@@ -1,4 +1,5 @@
-Version 1.0.4
+Version 1.0.5b:
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -Added this changelog.
 -Added aircraft category.
@@ -15,4 +16,19 @@ Version 1.0.4
 
 -Changed default values of build mode's snapping options are now scales of 1 for scale and translation and 90 degrees for rotation.
 
--Removed unsed UV map camera from the scene.
+-Removed unused UV map camera from the scene.
+
+Version 1.0.6b:
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-Added Stamp creator.
+-Added normal map viewer to the mesh inspector.
+-Added normal map creator.
+-Added material ID viewer to the mesh inspector.
+-Added material ID creator.
+-Added quad wireframe view to the mesh inspector.
+
+-Changed project now uses Unity's unversal render pipeline.
+-Changed all systems that exported images now share the same image exporter.
+-Chnaged MeshOutline shader remade in shader graph for URP.
+-Mesh inspector vertex counter text color is now black.

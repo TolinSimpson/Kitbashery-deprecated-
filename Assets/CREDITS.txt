@@ -21,4 +21,5 @@ NormalSmoothing.shader by unknownAuthor (Source: http://wiki.unity3d.com/index.p
 TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)
 ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)
 UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)
-CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)
+Dilate.shader by Sneha Belkhale (Github: https://github.com/sneha-belkhale/shader-bake-unity)
+TextureExtensions.cs by Bunny83 (Source: http://wiki.unity3d.com/index.php?title=TextureFloodFill)
