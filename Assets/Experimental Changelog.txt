@@ -27,8 +27,11 @@ Version 1.0.6b:
 -Added material ID viewer to the mesh inspector.
 -Added material ID creator.
 -Added quad wireframe view to the mesh inspector.
+-Added UI prefabs.
+-Added color picker.
 
 -Changed project now uses Unity's unversal render pipeline.
 -Changed all systems that exported images now share the same image exporter.
--Chnaged MeshOutline shader remade in shader graph for URP.
+-Changed MeshOutline shader remade in shader graph for URP.
+-Changed color picker now uses TextMeshPro for text rendering.
 -Mesh inspector vertex counter text color is now black.

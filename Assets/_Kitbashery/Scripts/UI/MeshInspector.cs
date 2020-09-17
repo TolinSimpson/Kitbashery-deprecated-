@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using SFB;
 
 //Kitbashery © 2020 Tolin Simpson 
 //Code released under GNU General Public License v3.0 see licnese file for full details.
@@ -22,10 +23,15 @@ namespace Kitbashery
         public GameObject createMatIDPopup;
         public GameObject normalMapEditorUI;
         public GameObject matIDMapEditorUI;
+        public GameObject imageSavedPopup;
+        public GameObject unsavedMatIDPopup;
+        public GameObject unsavedNormalMapPopup;
         public KitbasheryMeshImporter importer;
 
+        [Header("Inspected Mesh:")]
         public MeshRenderer rend;
         public MeshFilter filter;
+        public MeshCollider col;
         public PaintableObject paintable;
 
         [HideInInspector]
@@ -33,10 +39,13 @@ namespace Kitbashery
         [HideInInspector]
         public Texture2D normal;
 
+        private string meshFolderPath = "";
+
 
         [Header("Inspector UI:")]
         public TMP_Text vertCount;
         public Toggle useQuads;
+        public GameObject editMatID;
         public GameObject returnButton;
         public GameObject meshOptions;
 
@@ -68,49 +77,56 @@ namespace Kitbashery
             else
             {
                 importer.mode = KitbasheryMeshImporter.kitbasheryUIMode.inspector;
+                paintable.gameObject.name = Path.GetFileNameWithoutExtension(meshPath);
                 importer.ImportSingle(meshPath);
-                GetMeshTextures(meshPath);
+                col.sharedMesh = filter.sharedMesh;
+                meshFolderPath = Path.GetDirectoryName(meshPath);
+                GetMeshTextures();
 
                 orbitCam.distance = filter.sharedMesh.bounds.size.x + 5;
             }
         }
 
-        public void GetMeshTextures(string meshPath)
+        public void GetMeshTextures()
         {
-            string[] files = Directory.GetFiles(Path.GetDirectoryName(meshPath));
+            string[] files = Directory.GetFiles(meshFolderPath);
             if(files.Length > 2)
             {
                 foreach (string file in files)
                 {
-                    if (Path.GetFileName(file).Contains("_Normal"))
+                    string fileName = Path.GetFileName(file);
+                    if (!fileName.Contains(".meta"))
                     {
-                        byte[] byteArray = File.ReadAllBytes(file);
-                        Texture2D sampleTexture = new Texture2D(2, 2);
-                        bool isLoaded = sampleTexture.LoadImage(byteArray);
-                        if (isLoaded == true)
+                        if (fileName.Contains("_Normal"))
                         {
-                            normal = sampleTexture;
+                            byte[] byteArray = File.ReadAllBytes(file);
+                            Texture2D sampleTexture = new Texture2D(2, 2);
+                            bool isLoaded = sampleTexture.LoadImage(byteArray, false);
+                            if (isLoaded == true)
+                            {
+                                normal = sampleTexture;
+                            }
+                            else
+                            {
+                                Debug.LogError("Failed to load normal map at path: " + file);
+                            }
                         }
-                        else
-                        {
-                            Debug.LogError("Failed to load normal map at path: " + file);
-                        }
-                    }
 
-                    if (Path.GetFileName(file).Contains("_MatID"))
-                    {
-                        byte[] byteArray = File.ReadAllBytes(file);
-                        Texture2D sampleTexture = new Texture2D(2, 2);
-                        bool isLoaded = sampleTexture.LoadImage(byteArray);
-                        if (isLoaded == true)
+                        if (fileName.Contains("_MatID"))
                         {
-                            matID = sampleTexture;
+                            byte[] byteArray = File.ReadAllBytes(file);
+                            Texture2D sampleTexture = new Texture2D(2, 2);
+                            bool isLoaded = sampleTexture.LoadImage(byteArray, false);
+                            if (isLoaded == true)
+                            {
+                                matID = sampleTexture;
+                            }
+                            else
+                            {
+                                Debug.LogError("Failed to load material ID at path: " + file);
+                            }
                         }
-                        else
-                        {
-                            Debug.LogError("Failed to load material ID at path: " + file);
-                        }
-                    }
+                    }                  
                 }
             }
         }
@@ -124,6 +140,9 @@ namespace Kitbashery
             gameObject.SetActive(false);
             filter.sharedMesh = null;
             useQuads.isOn = false;
+            meshFolderPath = string.Empty;
+            matID = null;
+            normal = null;
 
             //Reset cam constraints:
             //orbitCam.transform.position = Vector3.zero;
@@ -133,17 +152,22 @@ namespace Kitbashery
             {
                 orbitCam.mouseYConstraint = 360;
             }
+
         }
 
         public void ViewDefault()
         {
             SetCamerUVView(false);
+            useQuads.gameObject.SetActive(false);
+            editMatID.SetActive(false);
             rend.material = defaultMat;
         }
 
         public void ViewWireframe()
         {
             SetCamerUVView(false);
+            useQuads.gameObject.SetActive(true);
+            editMatID.SetActive(false);
 
             if (useQuads.isOn == true)
             {
@@ -158,24 +182,32 @@ namespace Kitbashery
         public void ViewUVWireframe()
         {
             SetCamerUVView(true);
+            useQuads.gameObject.SetActive(false);
+            editMatID.SetActive(false);
             rend.material = uvWireframeMat;
         }
 
         public void ViewSmoothing()
         {
             SetCamerUVView(false);
+            useQuads.gameObject.SetActive(false);
+            editMatID.SetActive(false);
             rend.material = smoothingMat;
         }
 
         public void ViewUVChecker()
         {
             SetCamerUVView(false);
+            useQuads.gameObject.SetActive(false);
+            editMatID.SetActive(false);
             rend.material = uvCheckerMat;
         }
 
         public void ViewNormals()
         {
             SetCamerUVView(false);
+            useQuads.gameObject.SetActive(false);
+            editMatID.SetActive(false);
 
             rend.material = normalsMat;
             if (normal != null)
@@ -191,10 +223,12 @@ namespace Kitbashery
         public void ViewMaterialID()
         {
             SetCamerUVView(false);
+            useQuads.gameObject.SetActive(false);
 
             rend.material = matIDMat;
             if (matID != null)
             {
+                editMatID.SetActive(true);
                 rend.material.SetTexture("_BaseMap", matID);
             }
             else
@@ -248,6 +282,8 @@ namespace Kitbashery
             meshOptions.SetActive(toggle);
         }
 
+        #region Normal Map Editor:
+
         public void DisplayNormalMapEditor()
         {
             ToggleInspectorUI(false);
@@ -257,28 +293,85 @@ namespace Kitbashery
             paintable.SetPaintMode(PaintableObject.PaintMode.Stamp);
         }
 
-        public void EndNormalMapEdit()
+        public void CheckForUnsavedNormalMap()
+        {
+            if (paintable.savedChanges == false)
+            {
+                unsavedNormalMapPopup.SetActive(true);
+            }
+            else
+            {
+                CloseNormalMapEditor();
+            }
+        }
+
+        public void CloseNormalMapEditor()
         {
             normalMapEditorUI.SetActive(false);
+            paintable.savedChanges = false;
             paintable.enabled = false;
             ToggleInspectorUI(true);
+            normal = null;
         }
+
+        #endregion
+
+        #region Material ID Editor:
 
         public void DisplayMaterialIDEditor()
         {
             ToggleInspectorUI(false);
+
+            if(matID == null)
+            {
+                matID = paintable.Unwrap();               
+            }
+            rend.material.SetTexture("_BaseMap", matID);
+            paintable.matID = matID;
 
             matIDMapEditorUI.SetActive(true);
             paintable.enabled = true;
             paintable.SetPaintMode(PaintableObject.PaintMode.IDFill);
         }
 
-        public void EndMaterialIDMapEdit()
+        public void CheckForUnsavedMatID()
+        {
+            if (paintable.savedChanges == false)
+            {
+                unsavedMatIDPopup.SetActive(true);
+            }
+            else
+            {
+                CloseMaterialIDEditor();
+            }
+        }
+
+        public void CloseMaterialIDEditor()
         {
             matIDMapEditorUI.SetActive(false);
+            paintable.savedChanges = false;
             paintable.enabled = false;
             ToggleInspectorUI(true);
+            matID = null;
+            paintable.matID = null;
         }
+
+        public void SaveMatIDToLibrary()
+        {
+            TextureExporter.SaveTexture2D(paintable.matID, paintable.gameObject.name + "_MatID", TextureExporter.SaveTextureFormat.png, meshFolderPath);
+            paintable.savedChanges = true;
+            imageSavedPopup.SetActive(true);
+        }
+
+        public void ExportMatID()
+        {
+            ExtensionFilter[] extensions = new[] { new ExtensionFilter("Image Files", "png", "jpg", "tga", "exr") };
+            TextureExporter.SaveTexture2DFullPath(matID, StandaloneFileBrowser.SaveFilePanel("Save Material ID", string.Empty, paintable.gameObject.name + "_MatID", extensions));
+            paintable.savedChanges = true;
+            imageSavedPopup.SetActive(true);
+        }
+
+        #endregion
     }
 
 }

@@ -14,52 +14,11 @@ namespace Kitbashery
 
         public static void SaveRenderTexture(RenderTexture rt, string texName, SaveTextureFormat format, string savePath)
         {
-            savePath += "/" + texName;
-
-            byte[] _bytes = new byte[0];
-
-            switch (format)
-            {
-                case SaveTextureFormat.jpg:
-
-                    _bytes = ToTexture2D(rt).EncodeToJPG(100);
-
-                    savePath += ".jpg";
-
-                    break;
-
-                case SaveTextureFormat.png:
-
-                    _bytes = ToTexture2D(rt).EncodeToPNG();
-
-                    savePath += ".png";
-
-                    break;
-
-                case SaveTextureFormat.tga:
-
-                    _bytes = ToTexture2D(rt).EncodeToTGA();
-
-                    savePath += ".tga";
-
-                    break;
-
-                case SaveTextureFormat.exr:
-
-                    savePath += ".exr";
-
-                    _bytes = ToTexture2D(rt).EncodeToEXR();
-
-                    break;
-            }
-
-            File.Delete(savePath);
-            File.WriteAllBytes(savePath, _bytes);
+            SaveTexture2D(ToTexture2D(rt), texName, format, savePath);
         }
 
         public static void SaveTexture2D(Texture2D tex2D, string texName, SaveTextureFormat format, string savePath)
         {
-
             savePath += "/" + texName;
 
             byte[] _bytes = new byte[0];
@@ -100,7 +59,59 @@ namespace Kitbashery
                     break;
             }
 
-            File.Delete(savePath);
+            if(File.Exists(savePath))
+            {
+                File.Delete(savePath);
+#if UNITY_EDITOR
+
+                File.Delete(savePath + ".meta");
+#endif
+            }
+            File.WriteAllBytes(savePath, _bytes);
+        }
+
+        public static void SaveTexture2DFullPath(Texture2D tex2D, string savePath)
+        {
+            string extension = Path.GetExtension(savePath);
+            Debug.Log(extension);
+
+            byte[] _bytes = new byte[0];
+
+            switch (extension)
+            {
+                case ".jpg":
+
+                    _bytes = tex2D.EncodeToJPG(100);
+
+                    break;
+
+                case ".png":
+
+                    _bytes = tex2D.EncodeToPNG();
+
+                    break;
+
+                case ".tga":
+
+                    _bytes = tex2D.EncodeToTGA();
+
+                    break;
+
+                case ".exr":
+
+                    _bytes = tex2D.EncodeToEXR();
+
+                    break;
+            }
+
+            if (File.Exists(savePath))
+            {
+                File.Delete(savePath);
+#if UNITY_EDITOR
+
+                File.Delete(savePath + ".meta");
+#endif
+            }
             File.WriteAllBytes(savePath, _bytes);
         }
 
