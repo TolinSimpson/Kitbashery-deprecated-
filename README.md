@@ -55,6 +55,7 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>Deform by Keenan Woodall (MIT license, Github: https://github.com/keenanwoodall/deform)</li>
 <li>Unity3DRuntimeTransformGizmo by HiddenMonk (MIT license, Github: https://github.com/HiddenMonk/Unity3DRuntimeTransformGizmo)</li>
 <li>Github for Unity by Github Inc. (MIT license, Github: https://github.com/github-for-unity/Unity)</li>
+<li>HSV Picker by Judah4 (MIT license, Github: https://github.com/judah4/HSV-Color-Picker-Unity)</li>
   </ul>
 
 <b>INDAVIDUAL FILES:</b>
@@ -65,7 +66,6 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>NormalSmoothing.shader by unknownAuthor (Source: http://wiki.unity3d.com/index.php/NormalSmoothing)</li>
 <li>TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)</li>
 <li>ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)</li>
-<li>TextureExtensions.cs by Bunny83 (Source: http://wiki.unity3d.com/index.php?title=TextureFloodFill)</li>
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
 <li>Dilate.shader by Sneha Belkhale (Github: https://github.com/sneha-belkhale/shader-bake-unity)</li>
 </ul>
