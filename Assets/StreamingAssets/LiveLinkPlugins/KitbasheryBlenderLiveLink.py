@@ -1,12 +1,12 @@
 bl_info = {
     "name": "Kitbashery Live Link",
     "description": "Live link between Blender and Kitbashery",
-    "author": "",
+    "author": "Kitbashery",
     "version": (1, 0, 0),
     "blender": (2, 83, 0),
     "location": "",
     "category": "Import-Export",
-    "wiki_url": ""
+    "wiki_url": "Kitbashery.com"
 }
 
 import bpy, sys, socket, json

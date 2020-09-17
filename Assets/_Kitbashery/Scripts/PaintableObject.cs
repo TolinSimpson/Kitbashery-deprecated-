@@ -37,6 +37,8 @@ namespace Kitbashery
         public LayerMask mask = 8;
         private RaycastHit hit;
 
+        public bool lockControls = false;
+
         public enum PaintMode { Stamp, IDFill, Pattern, None }
         private PaintMode mode = PaintMode.IDFill;
 
@@ -57,47 +59,50 @@ namespace Kitbashery
 
         private void Update()
         {
-            switch (mode)
+            if(lockControls == false)
             {
-                case PaintMode.IDFill:
+                switch (mode)
+                {
+                    case PaintMode.IDFill:
 
-                    Raycast();
+                        Raycast();
 
-                    if (Input.GetKeyUp(KeyCode.Mouse0) == true)
-                    {
-                        if (hit.collider != null && matID != null)
+                        if (Input.GetKeyUp(KeyCode.Mouse0) == true)
                         {
-                            Vector2 pixelUV = hit.textureCoord * workingResolution;
+                            if (hit.collider != null && matID != null)
+                            {
+                                Vector2 pixelUV = hit.textureCoord * workingResolution;
 
-                            int x = (int)pixelUV.x;
-                            int y = (int)pixelUV.y;
+                                int x = (int)pixelUV.x;
+                                int y = (int)pixelUV.y;
 
-                            ScanlineFloodFill(matID, new Vector2Int(x, y), matID.GetPixel(x, y), fillColor);
-                            rend.material.SetTexture("_BaseMap", matID);
-                            savedChanges = false;
-                           // GetIDColors();
+                                ScanlineFloodFill(matID, new Vector2Int(x, y), matID.GetPixel(x, y), fillColor);
+                                rend.material.SetTexture("_BaseMap", matID);
+                                savedChanges = false;
+                                // GetIDColors();
+                            }
                         }
-                    }
-                    
 
-                    break;
 
-                case PaintMode.Stamp:
+                        break;
 
-                    Raycast();
-                    // rend.material.
-                    //Vector2 pixelUV = hit.textureCoord
+                    case PaintMode.Stamp:
 
-                    break;
+                        Raycast();
+                        // rend.material.
+                        //Vector2 pixelUV = hit.textureCoord
 
-                case PaintMode.Pattern:
+                        break;
 
-                    break;
+                    case PaintMode.Pattern:
 
-                case PaintMode.None:
+                        break;
 
-                    break;
-            }
+                    case PaintMode.None:
+
+                        break;
+                }
+            }        
         }
 
         public RaycastHit Raycast()
@@ -157,6 +162,8 @@ namespace Kitbashery
                     TextureScale.Point(matID, newResolution, newResolution);
                 }
                 //todo do check for normal map to resize too.
+
+                savedChanges = false;
             }
         }
 

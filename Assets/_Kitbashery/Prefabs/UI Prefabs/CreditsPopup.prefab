@@ -358,10 +358,11 @@ MonoBehaviour:
     Asset Import Library (assimp) by Assimp team\nAssImpNet by Nicholas Woodfield
     \nUnity Mesh Importer by Dongho Kang (MIT license)\nDeform by Keenan Woodall
     (MIT license)\nUnity3DRuntimeTransformGizmo by HiddenMonk (MIT license)\nGithub
-    for Unity by Github Inc. (MIT license)\n\r\nINDAVIDUAL FILES:\r\nNormalSmoothing.shader
-    by unknownAuthor \nTextureScale.cs by Eric Haines (Eric5h5) \nExportOBJ by DaveA,
-    KeliHlodversson, tgraupmann, drobe\nUV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema
-    4D Tutorial - UV Grids)\r\ndilate.shader by Sneha Belkhale"
+    for Unity by Github Inc. (MIT license)\nHSV Picker by Judah4 (MIT license)\n\r\nINDAVIDUAL
+    FILES:\r\nNormalSmoothing.shader by unknownAuthor \nTextureScale.cs by Eric Haines
+    (Eric5h5) \nExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe\nUV_Grid_Sm.jpg
+    by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)\r\ndilate.shader by Sneha
+    Belkhale"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
