@@ -55,6 +55,7 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>Deform by Keenan Woodall (MIT license, Github: https://github.com/keenanwoodall/deform)</li>
 <li>Unity3DRuntimeTransformGizmo by HiddenMonk (MIT license, Github: https://github.com/HiddenMonk/Unity3DRuntimeTransformGizmo)</li>
 <li>Github for Unity by Github Inc. (MIT license, Github: https://github.com/github-for-unity/Unity)</li>
+<li>HSV Picker by Judah4 (MIT license, Github: https://github.com/judah4/HSV-Color-Picker-Unity)</li>
   </ul>
 
 <b>INDAVIDUAL FILES:</b>
