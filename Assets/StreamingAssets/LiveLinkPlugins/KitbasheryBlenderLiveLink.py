@@ -4,17 +4,19 @@ bl_info = {
     "author": "Kitbashery",
     "version": (1, 0, 0),
     "blender": (2, 83, 0),
-    "location": "",
+    "location": "File > Import",
     "category": "Import-Export",
     "wiki_url": "Kitbashery.com"
 }
 
 import bpy, sys, socket, json
+from bpy.types import (Operator)
 
 host, port = 'localhost', 26738
 
-class LiveLink():
+class LiveLink(Operator):
     bl_idname = "live.link"
+    bl_label = "Listen to Kitbashery"
 
     def execute(self, context):
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
