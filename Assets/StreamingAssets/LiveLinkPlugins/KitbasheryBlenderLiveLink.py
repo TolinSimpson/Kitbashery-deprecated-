@@ -4,11 +4,12 @@ bl_info = {
     "author": "Kitbashery",
     "version": (1, 0, 0),
     "blender": (2, 83, 0),
+    #"location": "File > Import",
     "category": "Import-Export",
     "wiki_url": "Kitbashery.com"
 }
 
-import bpy, sys, socket, json, asyncio
+import bpy, json, asyncio
 from bpy.app.handlers import persistent
 
 port =  26738
@@ -58,20 +59,20 @@ class LiveLink(bpy.types.Operator):
             
         print("Kitbashery live link has stopped listening.")
            
-    async def startServer():       
+    async def startServer():  
+        print("Initialized Kitbashery live link... listening...")    
         server = await asyncio.start_server(listen, 'localhost', port)
         await server.serve_forever()
-        print("Initialized Kitbashery live link... listening...")
 
+    #How do you run this when blender starts up??
     @persistent
     def execute(self, context):
         asyncio.run(startServer())
         
-    #asyncio.run(startServer())
+    bpy.app.handlers.load_post.append(execute)
              
 def register():
     bpy.utils.register_class(LiveLink)
-    #bpy.app.handlers.load_post.append(bpy.ops.live.link.execute)
 
 def unregister():
     bpy.ops.live.link.stopServer()
