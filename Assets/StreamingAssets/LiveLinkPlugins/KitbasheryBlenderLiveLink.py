@@ -25,9 +25,7 @@ class LiveLink():
                 try:
                     #Deselect all selections:
                     context.selected_objects = null
-                    #Go into editmode:
-                    #context.scene.mode = 
-                
+                    
                     #import mesh from json:
                     jsonData = json.Loads(data.decode())
                     print(jsonData)
@@ -35,9 +33,18 @@ class LiveLink():
                     #https://docs.blender.org/api/current/bpy.ops.import_scene.html
                     bpy.ops.import_scene.obj(filepath= jsonData["meshPath"], filter_glob="*.obj;", use_edges=True, use_smooth_groups=True, use_split_objects=False, use_split_groups=False, use_groups_as_vgroups=False, use_image_search=False, split_mode='ON', global_clight_size=0.0, axis_forward='-Z', axis_up='Y')
                     
-                    #Get selected mesh (should be the import)
-                    #Convert tris of imported mesh faces to quads then get seams from uv islands  
-                    #Go to object mode                    
+                    
+                    #bpy.context.active_object
+                    
+                    #Weld vertices (This is a temp fix for a bug in Kitbashery's mesh combiner):
+                    bpy.ops.mesh.remove_doubles(threshold=0.0001, use_unselected=False)
+                    
+                    #Convert from tris to quads:
+                    bpy.ops.mesh.tris_convert_to_quads(face_threshold=0.698132, shape_threshold=0.698132, uvs=False, vcols=False, seam=False, sharp=False, materials=False)
+                    
+                    #Get seams from uv islands:
+                    bpy.ops.uv.seams_from_islands(mark_seams=True, mark_sharp=False)
+               
                 except:
                     print("no data?")
                     #client_socket.close()
@@ -47,6 +54,7 @@ def register():
     bpy.utils.register_class(LiveLink)
 
 def unregister():
+    #client_socket.close()
     bpy.utils.unregister_class(LiveLink)
 
 if __name__ == "__main__":
