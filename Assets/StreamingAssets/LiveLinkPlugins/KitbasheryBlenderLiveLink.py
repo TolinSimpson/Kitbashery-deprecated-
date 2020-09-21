@@ -4,25 +4,26 @@ bl_info = {
     "author": "Kitbashery",
     "version": (1, 0, 0),
     "blender": (2, 83, 0),
-    "location": "File > Import",
     "category": "Import-Export",
     "wiki_url": "Kitbashery.com"
 }
 
-import bpy, sys, socket, json
-from bpy.types import (Operator)
+import bpy, sys, socket, json, asyncio
+from bpy.app.handlers import persistent
 
-host, port = 'localhost', 26738
+port =  26738
 
-class LiveLink(Operator):
+class LiveLink(bpy.types.Operator):
     bl_idname = "live.link"
     bl_label = "Listen to Kitbashery"
 
-    def execute(self, context):
-        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((host, port))
-        while 1:
-            data = client_socket.recv(512)
+    async def listen(reader, writer):
+        while True:
+            data = await reader.read(8192)
+            
+            if not data:
+                break
+            
             if len(data) > 0:
                 try:
                     #Deselect all selections:
@@ -34,10 +35,7 @@ class LiveLink(Operator):
                     print(jsonData["meshPath"])
                     #https://docs.blender.org/api/current/bpy.ops.import_scene.html
                     bpy.ops.import_scene.obj(filepath= jsonData["meshPath"], filter_glob="*.obj;", use_edges=True, use_smooth_groups=True, use_split_objects=False, use_split_groups=False, use_groups_as_vgroups=False, use_image_search=False, split_mode='ON', global_clight_size=0.0, axis_forward='-Z', axis_up='Y')
-                    
-                    
-                    #bpy.context.active_object
-                    
+                                        
                     #Weld vertices (This is a temp fix for a bug in Kitbashery's mesh combiner):
                     bpy.ops.mesh.remove_doubles(threshold=0.0001, use_unselected=False)
                     
@@ -48,15 +46,35 @@ class LiveLink(Operator):
                     bpy.ops.uv.seams_from_islands(mark_seams=True, mark_sharp=False)
                
                 except:
-                    print("no data?")
-                    #client_socket.close()
+                    print("Kitbashery Live link: No data found?")
                     break;
                     
+    def stopServer():
+        try:
+            for task in asyncio.Task.all_tasks():
+                task.cancel()
+        except:
+            pass
+            
+        print("Kitbashery live link has stopped listening.")
+           
+    async def startServer():       
+        server = await asyncio.start_server(listen, 'localhost', port)
+        await server.serve_forever()
+        print("Initialized Kitbashery live link... listening...")
+
+    @persistent
+    def execute(self, context):
+        asyncio.run(startServer())
+        
+    #asyncio.run(startServer())
+             
 def register():
     bpy.utils.register_class(LiveLink)
+    #bpy.app.handlers.load_post.append(bpy.ops.live.link.execute)
 
 def unregister():
-    #client_socket.close()
+    bpy.ops.live.link.stopServer()
     bpy.utils.unregister_class(LiveLink)
 
 if __name__ == "__main__":
