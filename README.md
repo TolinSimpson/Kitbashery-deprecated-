@@ -1,6 +1,6 @@
-<p>
+<a href="kitbashery.com">
 <img src="https://static.wixstatic.com/media/f90a9a_9277d78201f74924b87c46b8c403400a~mv2.png/v1/fill/w_570,h_146,al_c,q_85/Kitbashery_Logo_Small.webp", alt ="Kitbashery Logo Banner">
-  </p>
+  </a>
 
 <h1><b>DESCRIPTION:</b></h1>
 
