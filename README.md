@@ -1,4 +1,4 @@
-<a href="kitbashery.com">
+<a href="https://www.kitbashery.com" target="_blank" rel="noopener noreferrer">
 <img src="https://static.wixstatic.com/media/f90a9a_9277d78201f74924b87c46b8c403400a~mv2.png/v1/fill/w_570,h_146,al_c,q_85/Kitbashery_Logo_Small.webp", alt ="Kitbashery Logo Banner">
   </a>
 
