@@ -34,4 +34,6 @@ Version 1.0.6b:
 -Changed all systems that exported images now share the same image exporter.
 -Changed MeshOutline shader remade in shader graph for URP.
 -Changed color picker now uses TextMeshPro for text rendering.
--Mesh inspector vertex counter text color is now black.
+-Changed renamed mesh inspector uv preview buttons.
+-Changed mesh inspector vertex counter text color is now black.
+-Changed replaced dilate shader with a better one.

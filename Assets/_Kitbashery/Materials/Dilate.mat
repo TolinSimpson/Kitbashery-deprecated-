@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dilate
-  m_Shader: {fileID: 4800000, guid: 4844b5fc42e6c2f43a8e1afc5d7bac70, type: 3}
+  m_Shader: {fileID: 4800000, guid: 83bead26c34b8584094ed6bfb705d6aa, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -56,9 +56,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_6D3CD54F: 0.005
+    - Vector1_96B5EA8C: 0.001
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DeltaX: 0.001
+    - _DeltaY: 0.001
     - _DetailNormalMapScale: 1
+    - _DilateSize: 0.001
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -67,6 +72,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Size: 0.001
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

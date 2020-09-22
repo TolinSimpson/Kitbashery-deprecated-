@@ -1,104 +1,62 @@
-﻿Shader "TextureBake/Dilate"
-{
-    Properties
-    {
-        _MainTex ("Texture", 2D) = "white" {}
-		_BackgroundColor("BackgroundColor", Color) = (0,0,0,0)
-    }
-    SubShader
-    {
-        // No culling or depth
-        Cull Off ZWrite Off ZTest Always
+﻿Shader "Kitbashery/Dilate" {
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+	Properties
+	{
+		_MainTex("Base (RGB)", 2D) = "white" {}
+		_Size("Size", Float) = 0.001
+	}
 
-            #include "UnityCG.cginc"
-            
-            sampler2D _MainTex;
-            float4 _MainTex_TexelSize;
-            float4 _MainTex_ST;
-            float4 _BackgroundColor;
-			float _OutlineSize;
-            
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-            };
-            
-            struct v2f
-            {
-                float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
-            };
+		SubShader{
+		Tags{ "RenderType" = "Opaque" }
+		LOD 200
 
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                
-                return o;
-            }
-            
-            // simple dilate operator, gets the brightest pixel in a radius. 
-            // not very efficient, but it is a one time operation.
-            float4 dilate (float2 uv) 
-            {
-                float2 delta = _MainTex_TexelSize;
-                float4 closestColor = _BackgroundColor;
-                float maxBright = 0;
-                for (float i = -3; i < 4; i++) {
-                    for(float j = -3; j < 4; j++) {
-                        float4 neighborCol = clamp(tex2D(_MainTex, uv + float2(i, j) * delta),0,1);
-                        float brightness = distance(neighborCol.rgb, _BackgroundColor.rgb);
-                        if(brightness > maxBright){
-                            closestColor = neighborCol;
-                            maxBright = brightness;
-                        }
-                    }
-                }
-                return closestColor; 
-            }
+		CGINCLUDE
 
-			float4 sobel(float2 uv)
-			{
-				float2 delta = float2(_OutlineSize, _OutlineSize);
+#include "UnityCG.cginc"
 
-				float4 hr = float4(0, 0, 0, 0);
-				float4 vt = float4(0, 0, 0, 0);
+		sampler2D _MainTex;
+		float _Size;
 
-				hr += tex2D(_MainTex, (uv + float2(-1.0, -1.0) * delta)) *  1.0;;
-				hr += tex2D(_MainTex, (uv + float2(1.0, -1.0) * delta)) * -1.0;
-				hr += tex2D(_MainTex, (uv + float2(-1.0, 0.0) * delta)) *  2.0;
-				hr += tex2D(_MainTex, (uv + float2(1.0, 0.0) * delta)) * -2.0;
-				hr += tex2D(_MainTex, (uv + float2(-1.0, 1.0) * delta)) *  1.0;
-				hr += tex2D(_MainTex, (uv + float2(1.0, 1.0) * delta)) * -1.0;
+		float sobel(sampler2D tex, float2 uv)
+		{
+			float2 delta = float2(_Size, _Size);
 
-				vt += tex2D(_MainTex, (uv + float2(-1.0, -1.0) * delta)) *  1.0;
-				vt += tex2D(_MainTex, (uv + float2(0.0, -1.0) * delta)) *  2.0;
-				vt += tex2D(_MainTex, (uv + float2(1.0, -1.0) * delta)) *  1.0;
-				vt += tex2D(_MainTex, (uv + float2(-1.0, 1.0) * delta)) * -1.0;
-				vt += tex2D(_MainTex, (uv + float2(0.0, 1.0) * delta)) * -2.0;
-				vt += tex2D(_MainTex, (uv + float2(1.0, 1.0) * delta)) * -1.0;
+			float4 hr = float4(0, 0, 0, 0);
+			float4 vt = float4(0, 0, 0, 0);
 
-				 return (hr * hr + vt * vt);
-			}
-            
-            fixed4 frag (v2f i) : SV_Target
-            {
-               fixed4 col = tex2D(_MainTex, i.uv);
-               if(distance(col.rgb, _BackgroundColor.rgb) < 0.001) {
-				   col = dilate(i.uv);// *0.001f;
-				  //col += sobel(i.uv);
-                } 
-                return col;
-            }
-            ENDCG
-        }
-    }
+			hr += tex2D(tex, (uv + float2(-1.0, -1.0) * delta)) *  1.0;
+			hr += tex2D(tex, (uv + float2(1.0, -1.0) * delta)) * -1.0;
+			hr += tex2D(tex, (uv + float2(-1.0,  0.0) * delta)) *  2.0;
+			hr += tex2D(tex, (uv + float2(1.0,  0.0) * delta)) * -2.0;
+			hr += tex2D(tex, (uv + float2(-1.0,  1.0) * delta)) *  1.0;
+			hr += tex2D(tex, (uv + float2(1.0,  1.0) * delta)) * -1.0;
+
+			vt += tex2D(tex, (uv + float2(-1.0, -1.0) * delta)) *  1.0;
+			vt += tex2D(tex, (uv + float2(0.0, -1.0) * delta)) *  2.0;
+			vt += tex2D(tex, (uv + float2(1.0, -1.0) * delta)) *  1.0;
+			vt += tex2D(tex, (uv + float2(-1.0,  1.0) * delta)) * -1.0;
+			vt += tex2D(tex, (uv + float2(0.0,  1.0) * delta)) * -2.0;
+			vt += tex2D(tex, (uv + float2(1.0,  1.0) * delta)) * -1.0;
+
+			return sqrt(hr * hr + vt * vt);
+		}
+
+	float4 frag(v2f_img IN) : COLOR
+	{
+		float s = sobel(_MainTex, IN.uv);
+		return float4(tex2D(_MainTex, IN.uv).r + s, tex2D(_MainTex, IN.uv).g + s, tex2D(_MainTex, IN.uv).b + s, 1);
+	}
+
+		ENDCG
+
+		Pass
+	{
+		CGPROGRAM
+#pragma vertex vert_img
+#pragma fragment frag
+			ENDCG
+	}
+
+	}
+		FallBack "Diffuse"
 }

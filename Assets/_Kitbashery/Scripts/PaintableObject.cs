@@ -173,8 +173,10 @@ namespace Kitbashery
         {
             //Unwrap mesh:
             Texture2D unwrapTex = new Texture2D(workingResolution, workingResolution);
+            unwrapTex.filterMode = FilterMode.Point;
 
             RenderTexture rt = RenderTexture.GetTemporary(workingResolution, workingResolution);
+            rt.filterMode = FilterMode.Point;
 
             Graphics.SetRenderTarget(rt);
             GL.Clear(true, true, Color.black);
@@ -184,8 +186,24 @@ namespace Kitbashery
             unwrap.SetPass(0);
             Graphics.DrawMeshNow(filter.sharedMesh, Matrix4x4.identity);
             Graphics.SetRenderTarget(null);
+
+            //rt2 is the destination texture we blit a material to to fill in the little black gap between uv seams of the unwrapped texture (rt).
+            //To "blit" shadergraph materials we have to use a custom render texture.
+           /* CustomRenderTexture rt2 = new CustomRenderTexture(workingResolution, workingResolution, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear);
+            rt2.updateMode = CustomRenderTextureUpdateMode.OnDemand;
+            rt2.material = dilate;
+            rt2.initializationSource = CustomRenderTextureInitializationSource.Material;
+            rt2.initializationMaterial = dilate;
+            rt2.doubleBuffered = true;
+            dilate.SetTexture("_MainTex", rt);
+            rt2.Initialize();*/
+
+            //If you are not using a shader graph shader to dilate the edges of uv islands these 3 lines will work:
             RenderTexture rt2 = RenderTexture.GetTemporary(workingResolution, workingResolution);
+            dilate.SetTexture("_MainTex", rt);
             Graphics.Blit(rt, rt2, dilate);
+
+            //TextureExporter.SaveRenderTexture(rt2, "test2", TextureExporter.SaveTextureFormat.jpg, Application.streamingAssetsPath);//Test output.
 
             unwrapTex = TextureExporter.ToTexture2D(rt2);
 

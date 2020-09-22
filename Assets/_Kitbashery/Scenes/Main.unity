@@ -1509,6 +1509,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
+  lockControls: 0
   savedChanges: 0
 --- !u!64 &1321394330
 MeshCollider:
