@@ -1,3 +1,7 @@
+<p>
+<img src="https://static.wixstatic.com/media/f90a9a_9277d78201f74924b87c46b8c403400a~mv2.png/v1/fill/w_570,h_146,al_c,q_85/Kitbashery_Logo_Small.webp", alt ="Kitbashery Logo Banner">
+  </p>
+
 <h1><b>DESCRIPTION:</b></h1>
 
 Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
