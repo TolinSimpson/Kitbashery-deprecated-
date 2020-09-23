@@ -1504,11 +1504,14 @@ MonoBehaviour:
   viewNormalsMat: {fileID: 2100000, guid: 0874abe30a5d170459266503f5a0f61b, type: 2}
   workingResolution: 1024
   matID: {fileID: 0}
+  normalMap: {fileID: 0}
   matIDColors: []
   fillColor: {r: 1, g: 0, b: 0, a: 1}
   mask:
     serializedVersion: 2
     m_Bits: 256
+  matIDPreview: {fileID: 8400000, guid: 01ee23ab2dbddd24f8cb66d3cf16ac8c, type: 2}
+  normalMapPreview: {fileID: 8400000, guid: 3982e78b7cec5724491b90b85b1a6574, type: 2}
   lockControls: 0
   savedChanges: 0
 --- !u!64 &1321394330
@@ -1820,8 +1823,6 @@ MonoBehaviour:
   filter: {fileID: 1321394326}
   col: {fileID: 1321394330}
   paintable: {fileID: 1321394329}
-  matID: {fileID: 0}
-  normal: {fileID: 0}
   vertCount: {fileID: 580993765}
   useQuads: {fileID: 2010070607}
   editMatID: {fileID: 2538065824202657576}
@@ -1836,9 +1837,9 @@ MonoBehaviour:
   normalsMat: {fileID: 2100000, guid: 0874abe30a5d170459266503f5a0f61b, type: 2}
   matIDMat: {fileID: 2100000, guid: 2de570fc5f5d46b4d852ac20c27e7f91, type: 2}
   stampMat: {fileID: 2100000, guid: 244bd05fe5eb41c418ac7855e2f36980, type: 2}
+  matIDPreview: {fileID: 2120700094}
+  normalMapPreview: {fileID: 0}
   stampRendTex: {fileID: 8400000, guid: d2df2433dbf957e46809a2ba1764f376, type: 2}
-  normalRendTex: {fileID: 8400000, guid: 3982e78b7cec5724491b90b85b1a6574, type: 2}
-  matIDRendTex: {fileID: 8400000, guid: 01ee23ab2dbddd24f8cb66d3cf16ac8c, type: 2}
 --- !u!1 &1504651064 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8076599841463219388, guid: 5cbc6c633f25b174d9d985da5d7ac006,
@@ -2393,6 +2394,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2120700094 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2012537326691421321, guid: 36d59d1c50841394d82b3dfa6f8db85e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7181838913547056751}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &86067402949284944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8455,6 +8468,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5780795503958064954, guid: 36d59d1c50841394d82b3dfa6f8db85e,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991726867398702560, guid: 36d59d1c50841394d82b3dfa6f8db85e,
+        type: 3}
+      propertyPath: paintable
+      value: 
+      objectReference: {fileID: 1321394329}
     - target: {fileID: 7181838913599709191, guid: 36d59d1c50841394d82b3dfa6f8db85e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -8750,6 +8773,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 1.35
       objectReference: {fileID: 0}
+    - target: {fileID: 8218106326781704294, guid: 36d59d1c50841394d82b3dfa6f8db85e,
+        type: 3}
+      propertyPath: paintable
+      value: 
+      objectReference: {fileID: 1321394329}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36d59d1c50841394d82b3dfa6f8db85e, type: 3}
 --- !u!1001 &8076599842124272516

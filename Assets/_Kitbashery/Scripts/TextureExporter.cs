@@ -115,7 +115,6 @@ namespace Kitbashery
             File.WriteAllBytes(savePath, _bytes);
         }
 
-
         public static Texture2D ToTexture2D(RenderTexture rTex)
         {
             Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false);

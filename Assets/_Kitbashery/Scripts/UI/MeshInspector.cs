@@ -16,6 +16,9 @@ namespace Kitbashery
     /// </summary>
     public class MeshInspector : MonoBehaviour
     {
+        #region Variables:
+
+        [Header("Object Refrences:")]
         public CameraOrbit orbitCam;
         public GameObject browserUI;
         public GameObject stampUI;
@@ -33,11 +36,6 @@ namespace Kitbashery
         public MeshFilter filter;
         public MeshCollider col;
         public PaintableObject paintable;
-
-        [HideInInspector]
-        public Texture2D matID;
-        [HideInInspector]
-        public Texture2D normal;
 
         private string meshFolderPath = "";
 
@@ -61,9 +59,11 @@ namespace Kitbashery
         public Material stampMat;
 
         [Header("Rendering:")]
+        public RawImage matIDPreview;
+        public RawImage normalMapPreview;
         public RenderTexture stampRendTex;
-        public RenderTexture normalRendTex;
-        public RenderTexture matIDRendTex;
+
+        #endregion
 
         /// <summary>
         /// Tells the manager to show the mesh inspector GUI and loads the mesh.
@@ -104,7 +104,7 @@ namespace Kitbashery
                             bool isLoaded = sampleTexture.LoadImage(byteArray, false);
                             if (isLoaded == true)
                             {
-                                normal = sampleTexture;
+                                paintable.normalMap = sampleTexture;
                             }
                             else
                             {
@@ -119,7 +119,7 @@ namespace Kitbashery
                             bool isLoaded = sampleTexture.LoadImage(byteArray, false);
                             if (isLoaded == true)
                             {
-                                matID = sampleTexture;
+                                paintable.matID = sampleTexture;
                             }
                             else
                             {
@@ -141,8 +141,8 @@ namespace Kitbashery
             filter.sharedMesh = null;
             useQuads.isOn = false;
             meshFolderPath = string.Empty;
-            matID = null;
-            normal = null;
+            paintable.matID = null;
+            paintable.normalMap = null;
 
             //Reset cam constraints:
             //orbitCam.transform.position = Vector3.zero;
@@ -154,6 +154,47 @@ namespace Kitbashery
             }
 
         }
+
+        public void SetCamerUVView(bool uvView)
+        {
+            orbitCam.uvView = uvView;
+            orbitCam.orbitCam.orthographic = uvView;
+
+            if (uvView == true)
+            {
+                orbitCam.mouseYConstraint = 0;
+                orbitCam.distance = 0.6f;
+                if (filter.sharedMesh.uv.Length < 3)//Note: this might not ever happen if the exporter adds empty UV coords.
+                {
+                    vertCount.text = "Mesh does not have UV0";//Tempting to change this to "Do you even unwrap bro?"
+                    //Note: if we ever get the xatlas integration working we might be able to just unwrap the mesh.
+                }
+                else
+                {
+                    vertCount.text = "UV0";
+                }
+
+            }
+            else
+            {
+                if (orbitCam.mouseYConstraint == 0)
+                {
+                    orbitCam.distance = filter.sharedMesh.bounds.size.x + 5;
+                    orbitCam.mouseYConstraint = 360;
+                }
+                vertCount.text = "Vertices: " + filter.sharedMesh.vertexCount + " | Triangles: " + (filter.sharedMesh.triangles.Length / 3);
+            }
+
+        }
+
+        public void ToggleInspectorUI(bool toggle)
+        {
+            returnButton.SetActive(toggle);
+            vertCount.gameObject.SetActive(toggle);
+            meshOptions.SetActive(toggle);
+        }
+
+        #region View Modes:
 
         public void ViewDefault()
         {
@@ -210,9 +251,9 @@ namespace Kitbashery
             editMatID.SetActive(false);
 
             rend.material = normalsMat;
-            if (normal != null)
+            if (paintable.normalMap != null)
             {
-                rend.material.SetTexture("_NormalMap", normal);
+                rend.material.SetTexture("_NormalMap", paintable.normalMap);
             }
             else
             {
@@ -226,10 +267,10 @@ namespace Kitbashery
             useQuads.gameObject.SetActive(false);
 
             rend.material = matIDMat;
-            if (matID != null)
+            if (paintable.matID != null)
             {
                 editMatID.SetActive(true);
-                rend.material.SetTexture("_BaseMap", matID);
+                rend.material.SetTexture("_BaseMap", paintable.matID);
             }
             else
             {
@@ -243,44 +284,7 @@ namespace Kitbashery
             rend.material = stampMat;
         }
 
-        public void SetCamerUVView(bool uvView)
-        {
-            orbitCam.uvView = uvView;
-            orbitCam.orbitCam.orthographic = uvView;
-
-            if (uvView == true)
-            {
-                orbitCam.mouseYConstraint = 0;
-                orbitCam.distance = 0.6f;
-                if (filter.sharedMesh.uv.Length < 3)//Note: this might not ever happen if the exporter adds empty UV coords.
-                {
-                    vertCount.text = "Mesh does not have UV0";//Tempting to change this to "Do you even unwrap bro?"
-                    //Note: if we ever get the xatlas integration working we might be able to just unwrap the mesh.
-                }
-                else
-                {
-                    vertCount.text = "UV0";
-                }
-
-            }
-            else
-            {
-                if (orbitCam.mouseYConstraint == 0)
-                {
-                    orbitCam.distance = filter.sharedMesh.bounds.size.x + 5;
-                    orbitCam.mouseYConstraint = 360;
-                }
-                vertCount.text = "Vertices: " + filter.sharedMesh.vertexCount + " | Triangles: " + (filter.sharedMesh.triangles.Length / 3);
-            }
-
-        }
-
-        public void ToggleInspectorUI(bool toggle)
-        {
-            returnButton.SetActive(toggle);
-            vertCount.gameObject.SetActive(toggle);
-            meshOptions.SetActive(toggle);
-        }
+        #endregion
 
         #region Normal Map Editor:
 
@@ -291,6 +295,7 @@ namespace Kitbashery
             normalMapEditorUI.SetActive(true);
             paintable.enabled = true;
             paintable.SetPaintMode(PaintableObject.PaintMode.Stamp);
+            normalMapPreview.texture = paintable.normalMap;
         }
 
         public void CheckForUnsavedNormalMap()
@@ -308,10 +313,8 @@ namespace Kitbashery
         public void CloseNormalMapEditor()
         {
             normalMapEditorUI.SetActive(false);
-            paintable.savedChanges = false;
             paintable.enabled = false;
             ToggleInspectorUI(true);
-            normal = null;
         }
 
         #endregion
@@ -322,16 +325,16 @@ namespace Kitbashery
         {
             ToggleInspectorUI(false);
 
-            if(matID == null)
+            if(paintable.matID == null)
             {
-                matID = paintable.Unwrap();               
+                paintable.matID = paintable.Unwrap();               
             }
-            rend.material.SetTexture("_BaseMap", matID);
-            paintable.matID = matID;
+            rend.material.SetTexture("_BaseMap", paintable.matID);
 
             matIDMapEditorUI.SetActive(true);
             paintable.enabled = true;
             paintable.SetPaintMode(PaintableObject.PaintMode.IDFill);
+            matIDPreview.texture = paintable.matID;
         }
 
         public void CheckForUnsavedMatID()
@@ -349,11 +352,8 @@ namespace Kitbashery
         public void CloseMaterialIDEditor()
         {
             matIDMapEditorUI.SetActive(false);
-            paintable.savedChanges = false;
             paintable.enabled = false;
             ToggleInspectorUI(true);
-            matID = null;
-            paintable.matID = null;
         }
 
         public void SaveMatIDToLibrary()
@@ -366,7 +366,7 @@ namespace Kitbashery
         public void ExportMatID()
         {
             ExtensionFilter[] extensions = new[] { new ExtensionFilter("Image Files", "png", "jpg", "tga", "exr") };
-            TextureExporter.SaveTexture2DFullPath(matID, StandaloneFileBrowser.SaveFilePanel("Save Material ID", string.Empty, paintable.gameObject.name + "_MatID", extensions));
+            TextureExporter.SaveTexture2DFullPath(paintable.matID, StandaloneFileBrowser.SaveFilePanel("Save Material ID", string.Empty, paintable.gameObject.name + "_MatID", extensions));
             paintable.savedChanges = true;
             imageSavedPopup.SetActive(true);
         }

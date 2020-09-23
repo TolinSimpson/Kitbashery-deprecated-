@@ -32,10 +32,15 @@ namespace Kitbashery
         [Header("Variables:")]
         public int workingResolution = 1024;
         public Texture2D matID;
+        public Texture2D normalMap;
         public List<Color> matIDColors = new List<Color>();
         public Color fillColor = Color.white;
         public LayerMask mask = 8;
         private RaycastHit hit;
+        [HideInInspector]
+        public Sprite matIDPreview;
+        [HideInInspector]
+        public Sprite normalMapPreview;
 
         public bool lockControls = false;
 
@@ -78,6 +83,8 @@ namespace Kitbashery
 
                                 ScanlineFloodFill(matID, new Vector2Int(x, y), matID.GetPixel(x, y), fillColor);
                                 rend.material.SetTexture("_BaseMap", matID);
+                                //Sprite.Create(matID, new Rect(matID.texelSize, Vector2.one), 1, );
+                               // Graphics.CopyTexture(rend.material.GetTexture("_BaseMap"), matIDPreview);
                                 savedChanges = false;
                                 // GetIDColors();
                             }
@@ -157,7 +164,7 @@ namespace Kitbashery
         {
             if(newResolution != workingResolution)
             {
-                if(matID != null)
+                if (matID != null)
                 {
                     TextureScale.Point(matID, newResolution, newResolution);
                 }
@@ -172,10 +179,10 @@ namespace Kitbashery
         public Texture2D Unwrap()
         {
             //Unwrap mesh:
-            Texture2D unwrapTex = new Texture2D(workingResolution, workingResolution);
+            Texture2D unwrapTex = new Texture2D(workingResolution, workingResolution, TextureFormat.ARGB32, false);
             unwrapTex.filterMode = FilterMode.Point;
 
-            RenderTexture rt = RenderTexture.GetTemporary(workingResolution, workingResolution);
+            RenderTexture rt = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
             rt.filterMode = FilterMode.Point;
 
             Graphics.SetRenderTarget(rt);
@@ -199,7 +206,7 @@ namespace Kitbashery
             rt2.Initialize();*/
 
             //If you are not using a shader graph shader to dilate the edges of uv islands these 3 lines will work:
-            RenderTexture rt2 = RenderTexture.GetTemporary(workingResolution, workingResolution);
+            RenderTexture rt2 = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
             dilate.SetTexture("_MainTex", rt);
             Graphics.Blit(rt, rt2, dilate);
 
@@ -210,6 +217,7 @@ namespace Kitbashery
             RenderTexture.ReleaseTemporary(rt);
             RenderTexture.ReleaseTemporary(rt2);
             GL.PopMatrix();
+
 
             return unwrapTex;
         }
