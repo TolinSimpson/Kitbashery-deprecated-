@@ -1,3 +1,7 @@
+<a href="https://www.kitbashery.com" target="_blank" rel="noopener noreferrer">
+<img src="https://static.wixstatic.com/media/f90a9a_9277d78201f74924b87c46b8c403400a~mv2.png/v1/fill/w_570,h_146,al_c,q_85/Kitbashery_Logo_Small.webp", alt ="Kitbashery Logo Banner">
+  </a>
+
 <h1><b>DESCRIPTION:</b></h1>
 
 Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
@@ -13,6 +17,9 @@ Note that Kitbashery's Unity project requires the following packages to be insta
   <li>Mathematics</li>
   <li>Burst</li>
   <li>Jobs</li>
+  <li>Core RP Library</li>
+  <li>Universal RP</li>
+  <li>Shader Graph</li>
   <li>TextMeshPro</li>
   <li>ProBuilder</li>
   <li><a href="https://github.com/eastskykang/UnityMeshImporter">Unity Mesh Importer</a></li>
@@ -46,13 +53,17 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <ul>
 <li>UnityWireframe by Super Systems Softworks LLC (MIT license, Github: https://github.com/Chaser324/unity-wireframe)</li>
 <li>Unity Standalone Filebrowser by gkngkc (MIT license, Github: https://github.com/gkngkc/UnityStandaloneFileBrowser)</li>
-<li>Open Asset Import Library (assimp) by Assimp team (Github: https://github.com/assimp/assimp)</li>
-<li>AssImpNet by Nicholas Woodfield (Github: https://github.com/assimp/assimp-net)</li>
-<li>Unity Mesh Importer by Dongho Kang (MIT license, Github: https://github.com/eastskykang/UnityMeshImporter)</li>
 <li>Deform by Keenan Woodall (MIT license, Github: https://github.com/keenanwoodall/deform)</li>
 <li>Unity3DRuntimeTransformGizmo by HiddenMonk (MIT license, Github: https://github.com/HiddenMonk/Unity3DRuntimeTransformGizmo)</li>
 <li>Github for Unity by Github Inc. (MIT license, Github: https://github.com/github-for-unity/Unity)</li>
-  </ul>
+<li>HSV Picker by Judah4 (MIT license, Github: https://github.com/judah4/HSV-Color-Picker-Unity)</li>
+</ul>
+<b>[Assimp]:</b>
+<ul>
+<li>Open Asset Import Library (assimp) by Assimp team (Github: https://github.com/assimp/assimp)</li>
+<li>AssImpNet by Nicholas Woodfield (Github: https://github.com/assimp/assimp-net)</li>
+<li>Unity Mesh Importer by Dongho Kang (MIT license, Github: https://github.com/eastskykang/UnityMeshImporter)</li>
+</ul>
 
 <b>INDAVIDUAL FILES:</b>
 <br>
@@ -63,7 +74,6 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)</li>
 <li>ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)</li>
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
-<li>CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)</li>
 </ul>
 
 <br>

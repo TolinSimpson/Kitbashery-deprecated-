@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using CommandUndoRedo;
 using Kitbashery;
+using UnityEngine.Rendering;
 
 namespace RuntimeGizmos
 {
@@ -147,19 +148,25 @@ namespace RuntimeGizmos
 			SetMaterial();
 		}
 
-		void OnEnable()
-		{
-			forceUpdatePivotCoroutine = StartCoroutine(ForceUpdatePivotPointAtEndOfFrame());
-		}
+        private void RenderPipelineManager_endCameraRendering(ScriptableRenderContext context, Camera camera)
+        {
+            OnPostRender();
+        }
 
-		void OnDisable()
-		{
-			ClearTargets(); //Just so things gets cleaned up, such as removing any materials we placed on objects.
+        void OnEnable()
+        {
+            RenderPipelineManager.endCameraRendering += RenderPipelineManager_endCameraRendering;
+            forceUpdatePivotCoroutine = StartCoroutine(ForceUpdatePivotPointAtEndOfFrame());
+        }
 
-			StopCoroutine(forceUpdatePivotCoroutine);
-		}
+        void OnDisable()
+        {
+            ClearTargets();
+            RenderPipelineManager.endCameraRendering -= RenderPipelineManager_endCameraRendering;
+            StopCoroutine(forceUpdatePivotCoroutine);
+        }
 
-		void OnDestroy()
+        void OnDestroy()
 		{
 			ClearAllHighlightedRenderers();
 		}
@@ -199,69 +206,71 @@ namespace RuntimeGizmos
 			}
 		}
 
-		void OnPostRender()
-		{
-			if(mainTargetRoot == null || manuallyHandleGizmo) return;
+        void OnPostRender()
+        {
+            if (mainTargetRoot == null || manuallyHandleGizmo) return;
 
-			lineMaterial.SetPass(0);
+            lineMaterial.SetPass(0);
 
-			Color xColor = (nearAxis == Axis.X) ? (isTransforming) ? selectedColor : hoverColor : this.xColor;
-			Color yColor = (nearAxis == Axis.Y) ? (isTransforming) ? selectedColor : hoverColor : this.yColor;
-			Color zColor = (nearAxis == Axis.Z) ? (isTransforming) ? selectedColor : hoverColor : this.zColor;
-			Color allColor = (nearAxis == Axis.Any) ? (isTransforming) ? selectedColor : hoverColor : this.allColor;
+            Color xColor = (nearAxis == Axis.X) ? (isTransforming) ? selectedColor : hoverColor : this.xColor;
+            Color yColor = (nearAxis == Axis.Y) ? (isTransforming) ? selectedColor : hoverColor : this.yColor;
+            Color zColor = (nearAxis == Axis.Z) ? (isTransforming) ? selectedColor : hoverColor : this.zColor;
+            Color allColor = (nearAxis == Axis.Any) ? (isTransforming) ? selectedColor : hoverColor : this.allColor;
 
-			//Note: The order of drawing the axis decides what gets drawn over what.
+            //Note: The order of drawing the axis decides what gets drawn over what.
 
-			TransformType moveOrScaleType = (transformType == TransformType.Scale || (isTransforming && translatingType == TransformType.Scale)) ? TransformType.Scale : TransformType.Move;
-			DrawQuads(handleLines.z, GetColor(moveOrScaleType, this.zColor, zColor, hasTranslatingAxisPlane));
-			DrawQuads(handleLines.x, GetColor(moveOrScaleType, this.xColor, xColor, hasTranslatingAxisPlane));
-			DrawQuads(handleLines.y, GetColor(moveOrScaleType, this.yColor, yColor, hasTranslatingAxisPlane));
+            TransformType moveOrScaleType = (transformType == TransformType.Scale || (isTransforming && translatingType == TransformType.Scale)) ? TransformType.Scale : TransformType.Move;
+            DrawQuads(handleLines.z, GetColor(moveOrScaleType, this.zColor, zColor, hasTranslatingAxisPlane));
+            DrawQuads(handleLines.x, GetColor(moveOrScaleType, this.xColor, xColor, hasTranslatingAxisPlane));
+            DrawQuads(handleLines.y, GetColor(moveOrScaleType, this.yColor, yColor, hasTranslatingAxisPlane));
 
-			DrawTriangles(handleTriangles.x, GetColor(TransformType.Move, this.xColor, xColor, hasTranslatingAxisPlane));
-			DrawTriangles(handleTriangles.y, GetColor(TransformType.Move, this.yColor, yColor, hasTranslatingAxisPlane));
-			DrawTriangles(handleTriangles.z, GetColor(TransformType.Move, this.zColor, zColor, hasTranslatingAxisPlane));
+            DrawTriangles(handleTriangles.x, GetColor(TransformType.Move, this.xColor, xColor, hasTranslatingAxisPlane));
+            DrawTriangles(handleTriangles.y, GetColor(TransformType.Move, this.yColor, yColor, hasTranslatingAxisPlane));
+            DrawTriangles(handleTriangles.z, GetColor(TransformType.Move, this.zColor, zColor, hasTranslatingAxisPlane));
 
-			DrawQuads(handlePlanes.z, GetColor(TransformType.Move, this.zColor, zColor, planesOpacity, !hasTranslatingAxisPlane));
-			DrawQuads(handlePlanes.x, GetColor(TransformType.Move, this.xColor, xColor, planesOpacity, !hasTranslatingAxisPlane));
-			DrawQuads(handlePlanes.y, GetColor(TransformType.Move, this.yColor, yColor, planesOpacity, !hasTranslatingAxisPlane));
+            DrawQuads(handlePlanes.z, GetColor(TransformType.Move, this.zColor, zColor, planesOpacity, !hasTranslatingAxisPlane));
+            DrawQuads(handlePlanes.x, GetColor(TransformType.Move, this.xColor, xColor, planesOpacity, !hasTranslatingAxisPlane));
+            DrawQuads(handlePlanes.y, GetColor(TransformType.Move, this.yColor, yColor, planesOpacity, !hasTranslatingAxisPlane));
 
-			DrawQuads(handleSquares.x, GetColor(TransformType.Scale, this.xColor, xColor));
-			DrawQuads(handleSquares.y, GetColor(TransformType.Scale, this.yColor, yColor));
-			DrawQuads(handleSquares.z, GetColor(TransformType.Scale, this.zColor, zColor));
-			DrawQuads(handleSquares.all, GetColor(TransformType.Scale, this.allColor, allColor));
+            DrawQuads(handleSquares.x, GetColor(TransformType.Scale, this.xColor, xColor));
+            DrawQuads(handleSquares.y, GetColor(TransformType.Scale, this.yColor, yColor));
+            DrawQuads(handleSquares.z, GetColor(TransformType.Scale, this.zColor, zColor));
+            DrawQuads(handleSquares.all, GetColor(TransformType.Scale, this.allColor, allColor));
 
-			DrawQuads(circlesLines.all, GetColor(TransformType.Rotate, this.allColor, allColor));
-			DrawQuads(circlesLines.x, GetColor(TransformType.Rotate, this.xColor, xColor));
-			DrawQuads(circlesLines.y, GetColor(TransformType.Rotate, this.yColor, yColor));
-			DrawQuads(circlesLines.z, GetColor(TransformType.Rotate, this.zColor, zColor));
-		}
+            DrawQuads(circlesLines.all, GetColor(TransformType.Rotate, this.allColor, allColor));
+            DrawQuads(circlesLines.x, GetColor(TransformType.Rotate, this.xColor, xColor));
+            DrawQuads(circlesLines.y, GetColor(TransformType.Rotate, this.yColor, yColor));
+            DrawQuads(circlesLines.z, GetColor(TransformType.Rotate, this.zColor, zColor));
+        }
 
-		Color GetColor(TransformType type, Color normalColor, Color nearColor, bool forceUseNormal = false)
-		{
-			return GetColor(type, normalColor, nearColor, false, 1, forceUseNormal);
-		}
-		Color GetColor(TransformType type, Color normalColor, Color nearColor, float alpha, bool forceUseNormal = false)
-		{
-			return GetColor(type, normalColor, nearColor, true, alpha, forceUseNormal);
-		}
-		Color GetColor(TransformType type, Color normalColor, Color nearColor, bool setAlpha, float alpha, bool forceUseNormal = false)
-		{
-			Color color;
-			if(!forceUseNormal && TranslatingTypeContains(type, false))
-			{
-				color = nearColor;
-			}else{
-				color = normalColor;
-			}
+            Color GetColor(TransformType type, Color normalColor, Color nearColor, bool forceUseNormal = false)
+            {
+                return GetColor(type, normalColor, nearColor, false, 1, forceUseNormal);
+            }
+            Color GetColor(TransformType type, Color normalColor, Color nearColor, float alpha, bool forceUseNormal = false)
+            {
+                return GetColor(type, normalColor, nearColor, true, alpha, forceUseNormal);
+            }
+            Color GetColor(TransformType type, Color normalColor, Color nearColor, bool setAlpha, float alpha, bool forceUseNormal = false)
+            {
+                Color color;
+                if (!forceUseNormal && TranslatingTypeContains(type, false))
+                {
+                    color = nearColor;
+                }
+                else
+                {
+                    color = normalColor;
+                }
 
-			if(setAlpha)
-			{
-				color.a = alpha;
-			}
+                if (setAlpha)
+                {
+                    color.a = alpha;
+                }
 
-			return color;
-		}
-
+                return color;
+            }
+			
 		void HandleUndoRedo()
 		{
 			if(maxUndoStored != UndoRedoManager.maxUndoStored) { UndoRedoManager.maxUndoStored = maxUndoStored; }

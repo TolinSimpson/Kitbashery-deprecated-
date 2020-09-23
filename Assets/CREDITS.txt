@@ -15,10 +15,10 @@ Unity Mesh Importer by Dongho Kang (MIT license, Github: https://github.com/east
 Deform by Keenan Woodall (MIT license, Github: https://github.com/keenanwoodall/deform)
 Unity3DRuntimeTransformGizmo by HiddenMonk (MIT license, Github: https://github.com/HiddenMonk/Unity3DRuntimeTransformGizmo)
 Github for Unity by Github Inc. (MIT license, Github: https://github.com/github-for-unity/Unity)
+HSV Picker by Judah4 (MIT license, Github: https://github.com/judah4/HSV-Color-Picker-Unity)
 
 INDAVIDUAL FILES:
 NormalSmoothing.shader by unknownAuthor (Source: http://wiki.unity3d.com/index.php/NormalSmoothing)
 TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)
 ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)
 UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)
-CustomOutline.shader by Luke Kabat (MIT license, Github: https://github.com/Shrimpey/Outlined-Diffuse-Shader-Fixed)
