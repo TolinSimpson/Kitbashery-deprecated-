@@ -26,7 +26,7 @@ namespace Kitbashery
         public Material unwrap;
         public Material dilate;
         public Material materialIDMat;
-        public Material paintNormalsMat;
+        public Material stampNormalsMat;
         public Material viewNormalsMat;
 
         [Header("Variables:")]
@@ -37,15 +37,11 @@ namespace Kitbashery
         public Color fillColor = Color.white;
         public LayerMask mask = 8;
         private RaycastHit hit;
-        [HideInInspector]
-        public Sprite matIDPreview;
-        [HideInInspector]
-        public Sprite normalMapPreview;
 
         public bool lockControls = false;
 
         public enum PaintMode { Stamp, IDFill, Pattern, None }
-        private PaintMode mode = PaintMode.IDFill;
+        public PaintMode mode = PaintMode.IDFill;
 
         /// <summary>
         /// Has the user saved their changes?
@@ -53,8 +49,10 @@ namespace Kitbashery
         [HideInInspector]
         public bool savedChanges = false;
 
-       // [Header("UI:")]
-       // public TMP_Text hitCoords;
+        // [Header("UI:")]
+        // public TMP_Text hitCoords;
+
+        #region Initialization & Updates:
 
         // Start is called before the first frame update
         void Start()
@@ -96,8 +94,7 @@ namespace Kitbashery
                     case PaintMode.Stamp:
 
                         Raycast();
-                        // rend.material.
-                        //Vector2 pixelUV = hit.textureCoord
+                        StampNormals();
 
                         break;
 
@@ -111,6 +108,8 @@ namespace Kitbashery
                 }
             }        
         }
+
+        #endregion
 
         public RaycastHit Raycast()
         {
@@ -128,31 +127,6 @@ namespace Kitbashery
             }
 
             return hit;
-        }
-
-        public void SetPaintMode(PaintMode paintMode)
-        {
-            mode = paintMode;
-            switch(mode)
-            {
-                case PaintMode.IDFill:
-
-
-                    break;
-
-                case PaintMode.Stamp:
-
-                    break;
-
-                case PaintMode.Pattern:
-
-                    break;
-
-
-                case PaintMode.None:
-
-                    break;
-            }
         }
 
         public void SetFillColor(Color col)
@@ -174,18 +148,50 @@ namespace Kitbashery
             }
         }
 
+        #region Normal Map Painting:
+
+        public void StampNormals()
+        {
+            //Get current normal map:
+            RenderTexture src = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
+            src.filterMode = FilterMode.Point;
+
+            Graphics.SetRenderTarget(src);
+            GL.Clear(true, true, Color.black);
+            GL.PushMatrix();
+            GL.LoadOrtho();
+
+            viewNormalsMat.SetPass(0);
+            Graphics.DrawMeshNow(filter.sharedMesh, Matrix4x4.identity);
+            Graphics.SetRenderTarget(null);
+
+
+            //Stamp normals:
+            RenderTexture dest = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
+            stampNormalsMat.SetVector("_Coords", hit.textureCoord);
+            Graphics.Blit(src, dest, stampNormalsMat);
+
+            rend.material.SetTexture("_NormalMap", dest);
+        }
+
+        #endregion
+
         #region Material ID Mapping:
 
+        /// <summary>
+        /// Unwraps the mesh to a texture filling all uv islands white and dilating the edges to remove seam lines.
+        /// </summary>
+        /// <returns></returns>
         public Texture2D Unwrap()
         {
             //Unwrap mesh:
             Texture2D unwrapTex = new Texture2D(workingResolution, workingResolution, TextureFormat.ARGB32, false);
             unwrapTex.filterMode = FilterMode.Point;
 
-            RenderTexture rt = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
-            rt.filterMode = FilterMode.Point;
+            RenderTexture src = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
+            src.filterMode = FilterMode.Point;
 
-            Graphics.SetRenderTarget(rt);
+            Graphics.SetRenderTarget(src);
             GL.Clear(true, true, Color.black);
             GL.PushMatrix();
             GL.LoadOrtho();
@@ -194,28 +200,28 @@ namespace Kitbashery
             Graphics.DrawMeshNow(filter.sharedMesh, Matrix4x4.identity);
             Graphics.SetRenderTarget(null);
 
-            //rt2 is the destination texture we blit a material to to fill in the little black gap between uv seams of the unwrapped texture (rt).
+            //dest is the destination texture we blit a material to to fill in the little black gap between uv seams of the unwrapped texture (rt).
             //To "blit" shadergraph materials we have to use a custom render texture.
-           /* CustomRenderTexture rt2 = new CustomRenderTexture(workingResolution, workingResolution, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear);
-            rt2.updateMode = CustomRenderTextureUpdateMode.OnDemand;
-            rt2.material = dilate;
-            rt2.initializationSource = CustomRenderTextureInitializationSource.Material;
-            rt2.initializationMaterial = dilate;
-            rt2.doubleBuffered = true;
+           /* CustomRenderTexture dest = new CustomRenderTexture(workingResolution, workingResolution, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear);
+            dest.updateMode = CustomRenderTextureUpdateMode.OnDemand;
+            dest.material = dilate;
+            dest.initializationSource = CustomRenderTextureInitializationSource.Material;
+            dest.initializationMaterial = dilate;
+            dest.doubleBuffered = true;
             dilate.SetTexture("_MainTex", rt);
-            rt2.Initialize();*/
+            dest.Initialize();*/
 
             //If you are not using a shader graph shader to dilate the edges of uv islands these 3 lines will work:
-            RenderTexture rt2 = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
-            dilate.SetTexture("_MainTex", rt);
-            Graphics.Blit(rt, rt2, dilate);
+            RenderTexture dest = RenderTexture.GetTemporary(workingResolution, workingResolution, 0, RenderTextureFormat.ARGB32);
+            dilate.SetTexture("_MainTex", src);
+            Graphics.Blit(src, dest, dilate);
 
-            //TextureExporter.SaveRenderTexture(rt2, "test2", TextureExporter.SaveTextureFormat.jpg, Application.streamingAssetsPath);//Test output.
+            //TextureExporter.SaveRenderTexture(dest, "test2", TextureExporter.SaveTextureFormat.jpg, Application.streamingAssetsPath);//Test output.
 
-            unwrapTex = TextureExporter.ToTexture2D(rt2);
+            unwrapTex = TextureExporter.ToTexture2D(dest);
 
-            RenderTexture.ReleaseTemporary(rt);
-            RenderTexture.ReleaseTemporary(rt2);
+            RenderTexture.ReleaseTemporary(src);
+            RenderTexture.ReleaseTemporary(dest);
             GL.PopMatrix();
 
 
@@ -341,7 +347,7 @@ namespace Kitbashery
             }
             else
             {
-                Debug.Log("Color is already set.");
+                Debug.Log("Colors are the same.");
             }
         }
 

@@ -294,7 +294,7 @@ namespace Kitbashery
 
             normalMapEditorUI.SetActive(true);
             paintable.enabled = true;
-            paintable.SetPaintMode(PaintableObject.PaintMode.Stamp);
+            paintable.mode = PaintableObject.PaintMode.Stamp;
             normalMapPreview.texture = paintable.normalMap;
         }
 
@@ -333,7 +333,7 @@ namespace Kitbashery
 
             matIDMapEditorUI.SetActive(true);
             paintable.enabled = true;
-            paintable.SetPaintMode(PaintableObject.PaintMode.IDFill);
+            paintable.mode = PaintableObject.PaintMode.IDFill;
             matIDPreview.texture = paintable.matID;
         }
 
