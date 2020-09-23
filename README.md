@@ -1,3 +1,7 @@
+<a href="https://www.kitbashery.com" target="_blank" rel="noopener noreferrer">
+<img src="https://static.wixstatic.com/media/f90a9a_9277d78201f74924b87c46b8c403400a~mv2.png/v1/fill/w_570,h_146,al_c,q_85/Kitbashery_Logo_Small.webp", alt ="Kitbashery Logo Banner">
+  </a>
+
 <h1><b>DESCRIPTION:</b></h1>
 
 Kitbashery is a desktop application made in Unity for managing large 3D kitbashing part libraries.
@@ -67,7 +71,6 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <li>TextureScale.cs by Eric Haines (Eric5h5) (Source: http://wiki.unity3d.com/index.php/TextureScale)</li>
 <li>ExportOBJ by DaveA, KeliHlodversson, tgraupmann, drobe (Source: http://wiki.unity3d.com/index.php?title=ExportOBJ)</li>
 <li>UV_Grid_Sm.jpg by Tim @ HelloLuxx.com (Cinema 4D Tutorial - UV Grids)</li>
-<li>Dilate.shader by Sneha Belkhale (Github: https://github.com/sneha-belkhale/shader-bake-unity)</li>
 </ul>
 
 <br>
