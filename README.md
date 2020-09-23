@@ -53,14 +53,17 @@ Parts of Kitbashery have been kitbashed together using in full or in part the fo
 <ul>
 <li>UnityWireframe by Super Systems Softworks LLC (MIT license, Github: https://github.com/Chaser324/unity-wireframe)</li>
 <li>Unity Standalone Filebrowser by gkngkc (MIT license, Github: https://github.com/gkngkc/UnityStandaloneFileBrowser)</li>
-<li>Open Asset Import Library (assimp) by Assimp team (Github: https://github.com/assimp/assimp)</li>
-<li>AssImpNet by Nicholas Woodfield (Github: https://github.com/assimp/assimp-net)</li>
-<li>Unity Mesh Importer by Dongho Kang (MIT license, Github: https://github.com/eastskykang/UnityMeshImporter)</li>
 <li>Deform by Keenan Woodall (MIT license, Github: https://github.com/keenanwoodall/deform)</li>
 <li>Unity3DRuntimeTransformGizmo by HiddenMonk (MIT license, Github: https://github.com/HiddenMonk/Unity3DRuntimeTransformGizmo)</li>
 <li>Github for Unity by Github Inc. (MIT license, Github: https://github.com/github-for-unity/Unity)</li>
 <li>HSV Picker by Judah4 (MIT license, Github: https://github.com/judah4/HSV-Color-Picker-Unity)</li>
-  </ul>
+</ul>
+<b>[Assimp]:</b>
+<ul>
+<li>Open Asset Import Library (assimp) by Assimp team (Github: https://github.com/assimp/assimp)</li>
+<li>AssImpNet by Nicholas Woodfield (Github: https://github.com/assimp/assimp-net)</li>
+<li>Unity Mesh Importer by Dongho Kang (MIT license, Github: https://github.com/eastskykang/UnityMeshImporter)</li>
+</ul>
 
 <b>INDAVIDUAL FILES:</b>
 <br>
