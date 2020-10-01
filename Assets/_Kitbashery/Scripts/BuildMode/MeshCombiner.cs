@@ -78,6 +78,7 @@ namespace Kitbashery
 
                 if (filters.Count > 0)
                 {
+                    //List<Box> box = UVPacker.PackUVs(filters);
                     Rect[] packedUVs = PackUVs(filters.ToArray());
                     for (int i = 0; i < filters.Count; i++)
                     {
@@ -86,6 +87,7 @@ namespace Kitbashery
                             CombineInstance instance = new CombineInstance();
                             instance.mesh = filters[i].sharedMesh;
                             instance.transform = filters[i].transform.localToWorldMatrix;
+                           // instance.mesh.SetUVs(0, FitUVsToRect(filters[i].sharedMesh.uv, GetUVRect(filters[i].sharedMesh.uv), UVPacker.BoxToRect(box[i])));
                             instance.mesh.SetUVs(0, FitUVsToRect(filters[i].sharedMesh.uv, GetUVRect(filters[i].sharedMesh.uv), packedUVs[i]));
                             combine.Add(instance);
                         }
@@ -111,6 +113,7 @@ namespace Kitbashery
         }
 
         #region Pack UVs:
+
 
         /// <summary>
         /// Packs UVs into a grid. TODO: replace with a proper bin or uv pack type thing preferably with meshes sorted by the size of their bounds having larger UV squares for larger bounds.
@@ -196,7 +199,6 @@ namespace Kitbashery
         { 
             for (int i = 0; i < uvs.Length; i++)
             {
-
                 uvs[i].x = packRect.x + uvs[i].x * packRect.width;
                 uvs[i].y = packRect.y + uvs[i].y * packRect.height;
             }
