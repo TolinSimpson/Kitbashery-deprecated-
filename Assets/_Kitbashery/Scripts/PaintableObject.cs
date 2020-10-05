@@ -94,7 +94,14 @@ namespace Kitbashery
                     case PaintMode.Stamp:
 
                         Raycast();
-                        StampNormals();
+                        if (Input.GetKeyUp(KeyCode.Mouse0) == true)
+                        {
+                            if (hit.collider != null && normalMap != null)
+                            {
+                                StampNormals();
+                            }
+
+                        }
 
                         break;
 
@@ -172,6 +179,10 @@ namespace Kitbashery
             Graphics.Blit(src, dest, stampNormalsMat);
 
             rend.material.SetTexture("_NormalMap", dest);
+
+            RenderTexture.ReleaseTemporary(src);
+            RenderTexture.ReleaseTemporary(dest);
+            GL.PopMatrix();
         }
 
         #endregion

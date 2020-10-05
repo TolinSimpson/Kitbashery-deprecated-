@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+//Kitbashery © 2020 Tolin Simpson 
+//Code released under GNU General Public License v3.0 see licnese file for full details.
+
 namespace Kitbashery
 {
     ////https://stackoverflow.com/questions/14108553/get-border-edges-of-mesh-in-winding-order
