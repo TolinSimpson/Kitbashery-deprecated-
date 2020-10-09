@@ -15,7 +15,7 @@ namespace Kitbashery
     //https://github.com/cariquitanmac/2D-Bin-Pack-Binary-Search/blob/master/2D%20Binary%20Tree%20Bin-Pack/2D%20Binary%20Tree%20Bin-Pack/Packer.cs
     //https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
 
-
+    //TODO: Replace the "Box" class with a new one using Unity's Rect to remove redundant conversions.
     public static class UVPacker
     {
 
