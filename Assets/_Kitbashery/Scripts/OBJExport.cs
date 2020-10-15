@@ -58,6 +58,13 @@ public static class OBJExport
 
             ResetIndex();
             //Debug.Log("Exported Mesh: " + filePath);
+
+/*#if UNITY_EDITOR
+            filePath = "Assets/StreamingAssets/Mo" + filePath.TrimStart(Application.streamingAssetsPath.ToCharArray());
+            UnityEditor.AssetDatabase.ImportAsset(filePath);
+            UnityEditor.AssetDatabase.WriteImportSettingsIfDirty(filePath);
+            UnityEditor.AssetDatabase.SaveAssets();
+#endif*/
         }
         else
         {

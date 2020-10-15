@@ -189,7 +189,7 @@ namespace Kitbashery
 
                 if (filters.Count > 0)
                 {
-                    Mesh combine = MeshCombiner.CombineMeshes(filters, false);
+                    Mesh combine = MeshCombiner.MeshCombiner.Combine(filters.ToArray(), true, 0.01f);
 
                     combine.Optimize();
                     combine.RecalculateBounds();

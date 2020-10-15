@@ -351,7 +351,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Kitbashery by Tolin Simpson\r\n\r\nUnity by Unity Technologies\r\nTextMeshPro
+  m_text: "Kitbashery Development:\n\nTolin Simpson (Programming, 3D art, everything
+    else)\nJorge Reyna Tamez (Programming)\n\r\nUnity by Unity Technologies\r\nTextMeshPro
     by Unity Technologies\r\nProbuilder by Unity Technologies\r\n\r\nBlender by Blender
     Foundation\r\n\r\n3RD PARTY SOLUTIONS:\r\nUnityWireframe by Super Systems Softworks
     LLC (MIT license)\nUnity Standalone Filebrowser by gkngkc (MIT license)\nOpen
