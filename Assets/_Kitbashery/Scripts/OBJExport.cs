@@ -12,7 +12,7 @@ using System;
 //Removed UnityEditor dependancy
 //Merged Start() and Stop() into ResetIndex()
 //Renamed ambiguous variables
-//Imporved error checking
+//Improved error checking
 //Added normal flipper
 
 /// <summary>

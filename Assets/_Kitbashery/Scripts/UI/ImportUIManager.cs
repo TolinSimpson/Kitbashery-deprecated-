@@ -18,7 +18,7 @@ namespace Kitbashery
         #region Variables:
 
         [HideInInspector]
-        public List<GameObject> imports = new List<GameObject>();
+        public List<Import> imports = new List<Import>();
 
         /// <summary>
         /// The index of the current import.
@@ -27,10 +27,10 @@ namespace Kitbashery
         public string index;
 
         /// <summary>
-        /// The current gameobject the user can adjust import settings for.
+        /// The current assimp scene/ gameobject the user can adjust import settings for.
         /// </summary>
         [HideInInspector]
-        public GameObject current;
+        public Import current;
 
         [HideInInspector]
         public int importIndex = 0;
@@ -96,8 +96,9 @@ namespace Kitbashery
         /// </summary>
         public void OpenFileBrowser()
         {
-            // Browse for .obj files:
-            ExtensionFilter[] extensions = new[] { new ExtensionFilter("3D File", "obj", "fbx", "ply", "dae", "3ds", "stl", "ase", "mdl", "dxf", "xml") };//TODO: Get assimp supported file extensions.
+            // Browse for mesh files:
+            ExtensionFilter[] extensions = new[] { new ExtensionFilter("3D File", "obj", "fbx", "ply", "dae", "3ds", "stl", "ase", "mdl", "dxf", "xml") };
+            //ExtensionFilter[] extensions = new[] { new ExtensionFilter("3D File", importer.supportedImportFormats) };//Not all formats are fully supported.
             string[] paths = StandaloneFileBrowser.OpenFilePanel("Import", "", extensions, true);
 
             // Load each .obj at path:
@@ -115,10 +116,10 @@ namespace Kitbashery
 
         public void SaveImport()
         {
-            current.transform.rotation = Quaternion.identity;
-            current.transform.position = Vector3.zero;
-            current.transform.localScale = Vector3.one;
-            current.name = nameInput.text;
+            current.GO.transform.rotation = Quaternion.identity;
+            current.GO.transform.position = Vector3.zero;
+            current.GO.transform.localScale = Vector3.one;
+            current.GO.name = nameInput.text;
 
             string savePath = Application.streamingAssetsPath + "/models/" + categoryList.options[categoryList.value].text + "/" + nameInput.text; //Create a folder with the name of the mesh under the selected category directory.
 
@@ -130,7 +131,8 @@ namespace Kitbashery
             }
 
             Directory.CreateDirectory(savePath);
-            OBJExport.Export(current, savePath);
+            //importer.ExportOBJ(current.scene, savePath);
+            OBJExport.Export(current.GO, savePath);
 
             SaveThumbnail(savePath);
 
@@ -150,13 +152,12 @@ namespace Kitbashery
                 TextureScale.Bilinear(tex, thumbnailResolution, thumbnailResolution);
 
                 //Save:
-                TextureExporter.SaveTexture2D(tex, current.name + "_Thumbnail.jpg", TextureExporter.SaveTextureFormat.jpg, savePath);
+                TextureExporter.SaveTexture2D(tex, current.GO.name + "_Thumbnail.jpg", TextureExporter.SaveTextureFormat.jpg, savePath);
             }
             else
             {
                 Debug.LogError("Exporting thumbnail failed: Thumbnail texture was null.");
             }
-
         }
 
         public void CloseImportUI()
@@ -184,7 +185,7 @@ namespace Kitbashery
         /// </summary>
         public void ImportNext()
         {
-            Destroy(current);
+            Destroy(current.GO);
 
             //Update text:
             importIndex++;
@@ -206,8 +207,8 @@ namespace Kitbashery
             {
                 //Set new current:
                 current = imports[importIndex];
-                nameInput.text = current.name;
-                current.SetActive(true);
+                nameInput.text = current.GO.name;
+                current.GO.SetActive(true);
             }
 
             ResetSliders();
@@ -234,9 +235,9 @@ namespace Kitbashery
             //Make sure the name is not empty:
             if (nameInput.text == string.Empty)
             {
-                if (current.name != string.Empty)
+                if (current.GO.name != string.Empty)
                 {
-                    nameInput.text = current.name;
+                    nameInput.text = current.GO.name;
                 }
                 else
                 {
@@ -261,40 +262,40 @@ namespace Kitbashery
 
         public void ScaleCurrentSize()
         {
-            current.transform.localScale = Vector3.one * sizeSlider.value;//TODO: the min/max value of the slider could be determined by the bounds of the imported mesh.
+            current.GO.transform.localScale = Vector3.one * sizeSlider.value;//TODO: the min/max value of the slider could be determined by the bounds of the imported mesh.
         }
 
         public void RotateX()
         {
             //https://gamedev.stackexchange.com/questions/136174/im-rotating-an-object-on-two-axes-so-why-does-it-keep-twisting-around-the-thir
 
-            current.transform.eulerAngles = new Vector3(rotXSlider.value, current.transform.eulerAngles.y, current.transform.eulerAngles.z);
-            rotYSlider.value = current.transform.eulerAngles.y;
-            rotZSlider.value = current.transform.eulerAngles.z;
+            current.GO.transform.eulerAngles = new Vector3(rotXSlider.value, current.GO.transform.eulerAngles.y, current.GO.transform.eulerAngles.z);
+            rotYSlider.value = current.GO.transform.eulerAngles.y;
+            rotZSlider.value = current.GO.transform.eulerAngles.z;
         }
 
         public void RotateY()
         {
-            current.transform.eulerAngles = new Vector3(current.transform.eulerAngles.x, rotYSlider.value, current.transform.eulerAngles.z);
-            rotXSlider.value = current.transform.eulerAngles.x;
-            rotZSlider.value = current.transform.eulerAngles.z;
+            current.GO.transform.eulerAngles = new Vector3(current.GO.transform.eulerAngles.x, rotYSlider.value, current.GO.transform.eulerAngles.z);
+            rotXSlider.value = current.GO.transform.eulerAngles.x;
+            rotZSlider.value = current.GO.transform.eulerAngles.z;
         }
 
         public void RotateZ()
         {
-            current.transform.eulerAngles = new Vector3(current.transform.eulerAngles.x, current.transform.eulerAngles.y, rotZSlider.value);
-            rotYSlider.value = current.transform.eulerAngles.y;
-            rotXSlider.value = current.transform.eulerAngles.x;
+            current.GO.transform.eulerAngles = new Vector3(current.GO.transform.eulerAngles.x, current.GO.transform.eulerAngles.y, rotZSlider.value);
+            rotYSlider.value = current.GO.transform.eulerAngles.y;
+            rotXSlider.value = current.GO.transform.eulerAngles.x;
         }
 
         public void OffsetX()
         {
-            current.transform.position = new Vector3(posXSlider.value, current.transform.position.y, current.transform.position.z);
+            current.GO.transform.position = new Vector3(posXSlider.value, current.GO.transform.position.y, current.GO.transform.position.z);
         }
 
         public void OffsetY()
         {
-            current.transform.position = new Vector3(current.transform.position.x, posYSlider.value, current.transform.position.z);
+            current.GO.transform.position = new Vector3(current.GO.transform.position.x, posYSlider.value, current.GO.transform.position.z);
         }
 
         #endregion
