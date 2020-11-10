@@ -1,4 +1,7 @@
-Kitbashery by Tolin Simpson
+Kitbashery Development:
+
+Tolin Simpson (Programming, 3D art, everything else)
+Jorge Reyna Tamez (Programming)
 
 Unity by Unity Technologies
 TextMeshPro by Unity Technologies

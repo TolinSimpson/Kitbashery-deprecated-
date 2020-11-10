@@ -11,12 +11,13 @@ using Mesh = UnityEngine.Mesh;
 
 namespace Kitbashery
 {
+    /// <summary>
+    /// Wrapped for Assimp import/export functions.
+    /// </summary>
     public class KitbasheryMeshImporter : MonoBehaviour
     {
         [HideInInspector]
-        public List<GameObject> imports = new List<GameObject>();
-        [HideInInspector]
-        public List<MeshFilter> filters = new List<MeshFilter>();
+        public List<Import> rootImports = new List<Import>();
 
         [Space]
         public MeshInspector meshInspector;
@@ -28,23 +29,38 @@ namespace Kitbashery
         public enum kitbasheryUIMode { import, inspector, buildmode }
         public kitbasheryUIMode mode;
 
+        public string[] supportedImportFormats;
 
-        #region Import Functions:
+        private void Start()
+        {
+            GetSupportedFileFilters();
+        }
+
+        /// <summary>
+        /// Gets supported file extensions for filtering (removes the "." from the front).
+        /// </summary>
+        public void GetSupportedFileFilters()
+        {
+            AssimpContext context = new AssimpContext();
+
+            List<string> supported = new List<string>();
+            char[] period = ".".ToCharArray();
+            foreach (string format in context.GetSupportedImportFormats())
+            {
+                supported.Add(format.TrimStart(period));
+            }
+            supportedImportFormats.Equals(supported.ToString());
+        }
+
+
+        #region Import/Export Functions:
 
         public void ImportSingle(string path)
         {
-            GameObject import = Load(path);
+            Import import = Load(path);
             if (import != null)
             {
-                imports.Add(import);
-                if (import.transform.childCount > 0)
-                {
-                    filters.Add(import.GetComponentInChildren<MeshFilter>());
-                }
-                else
-                {
-                    filters.Add(import.GetComponent<MeshFilter>());
-                }
+                rootImports.Add(import);
 
                 UpdateKitbasheryUI();
             }
@@ -58,15 +74,125 @@ namespace Kitbashery
         {
             foreach (string path in paths)
             {
-                GameObject import = Load(path);
-                imports.Add(import);
-                foreach (MeshFilter filter in import.GetComponentsInChildren<MeshFilter>())//Note: may be able to add to the filters list in the Load() function instead.
-                {
-                    filters.Add(filter);
-                }
+                Import import = Load(path);
+                rootImports.Add(import);
             }
 
             UpdateKitbasheryUI();
+        }
+
+        /// <summary>
+        /// Exports an assimp scene as a .obj formatted file to filepath.
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="filepath"></param>
+        public void ExportOBJ(Scene scene, string savePath)
+        {
+            if(scene != null && scene.HasMeshes == true)
+            {
+                AssimpContext exporter = new AssimpContext();
+                exporter.ExportFile(scene, "savePath", "objnomtl");
+                //ExportDataBlob blob = exporter.ExportToBlob(scene, "objnomtl");//"objnomtl"  "Wavefront OBJ format without material file"
+               // Debug.Log(blob);
+                //Debug.Log(savePath);
+                //if(blob.HasData == true)
+               // {
+                    /* if (File.Exists(savePath))
+                     {
+                         File.Delete(savePath);
+ #if UNITY_EDITOR
+
+                         File.Delete(savePath + ".meta");
+#endif
+                    }
+                    else
+                    {
+                        Debug.Log(true);
+                    }*/
+                     //File.Create(savePath);
+                     //File.WriteAllBytes(savePath, blob.Data);
+               // }
+               // else
+               // {
+               //     Debug.LogError("No data to export.");
+              //  }
+            //}
+           // else
+           // {
+           //     Debug.Log("Scene to export does not contain any meshes or is null.");
+           }
+        }
+
+        #endregion
+
+        #region Wrapper Conversions:
+
+        public Assimp.Mesh UnityMeshToAssimpMesh(Mesh uMesh)
+        {
+            Assimp.Mesh m = new Assimp.Mesh();
+
+
+            foreach (Vector3 v3 in uMesh.vertices)
+            {
+                m.Vertices.Add(UnityV3toAssimpV3(v3));
+            }
+
+            foreach (Vector3 v3 in uMesh.normals)
+            {
+                m.Normals.Add(UnityV3toAssimpV3(v3));
+            }
+
+            for (int i = 0; i < uMesh.triangles.Length; i += 3)
+            {
+                Face f = new Face();
+                f.Indices.Add(i);
+                f.Indices.Add(i + 1);
+                f.Indices.Add(i + 2);
+                m.Faces.Add(f);
+                //Should order be 2,1,0
+            }
+
+            foreach (Vector2 v2 in uMesh.uv)
+            {
+                m.TextureCoordinateChannels[0].Add(UnityV2toAssimpV3(v2));
+            }
+
+            return m;
+        }
+
+        public Vector3D UnityV2toAssimpV3(Vector2 v2)
+        {
+            Vector3D v3d = new Vector3D();
+            v3d.X = v2.x;
+            v3d.Y = v2.y;
+            //should x be negative?
+
+            return v3d;
+        }
+
+        public Vector3D UnityV3toAssimpV3(Vector3 v3)
+        {
+            Vector3D v3d = new Vector3D();
+            v3d.X = v3.x;
+            v3d.Y = v3.y;
+            v3d.Z = v3.z;
+            //should x be negative?
+
+            return v3d;
+        }
+
+        public Scene UnityMeshToAssimpScene(Mesh mesh)
+        {
+            Scene s = new Scene();
+            s.Meshes.Add(UnityMeshToAssimpMesh(mesh));
+            return s;
+        }
+
+        public Scene GameObjectToAssimpScene(GameObject go)
+        {
+            Scene s = new Scene();
+            s.Meshes.Add(UnityMeshToAssimpMesh(go.GetComponent<MeshFilter>().sharedMesh));
+            return s;
         }
 
         #endregion
@@ -80,28 +206,46 @@ namespace Kitbashery
             {
                 case kitbasheryUIMode.import:
 
-                    if (imports.Count > 0)
+                    if (rootImports.Count > 0)
                     {
-                        //Make sure all imported meshes are hidden and set to the world origin and have a valid name:
-                        foreach (MeshFilter filter in filters)
+                        foreach(Import import in rootImports)
                         {
-                            filter.transform.parent = null;
-                            filter.gameObject.SetActive(false);
-                            MeshTransformToWorldOrigin(filter);
-
-                            //Make sure no periods snuck in the name from children objects. (*Cough blender export* *Cough* *Cough*)
-                            if (filter.gameObject.name.Contains("."))
+                            //Check if the root GO has a mesh:
+                            MeshFilter mf = import.GO.GetComponent<MeshFilter>();
+                            if(mf != null)
                             {
-                                filter.gameObject.name = filter.gameObject.name.Replace(".", "_");
-                            }
+                                //Make sure mesh is hidden, set to the world origin and has a valid name: 
+                                import.GO.SetActive(false);
+                                MeshTransformToWorldOrigin(mf);
 
-                            importUI.imports.Add(filter.gameObject);
+                                if (import.GO.name.Contains("."))
+                                {
+                                    import.GO.name = import.GO.name.Replace(".", "_");
+                                }
+
+                                importUI.imports.Add(new Import(UnityMeshToAssimpScene(mf.sharedMesh), import.GO, mf));
+                            }
+           
+                            //Repeat for child objects:
+                            foreach (MeshFilter filter in import.GO.GetComponentsInChildren<MeshFilter>())
+                            {
+                                filter.transform.parent = null;
+                                filter.gameObject.SetActive(false);
+                                MeshTransformToWorldOrigin(filter);
+
+                                if (filter.gameObject.name.Contains("."))
+                                {
+                                    filter.gameObject.name = filter.gameObject.name.Replace(".", "_");
+                                }
+
+                                importUI.imports.Add(new Import(UnityMeshToAssimpScene(filter.sharedMesh), filter.gameObject, filter));
+                            }
                         }
 
                         //Set current import:
-                        importUI.current = filters[0].gameObject;
-                        importUI.current.SetActive(true);
-                        importUI.meshName.text = importUI.current.name;
+                        importUI.current = importUI.imports[0];
+                        importUI.current.GO.SetActive(true);
+                        importUI.meshName.text = importUI.current.GO.name;
                         importUI.index = (importUI.importIndex + 1).ToString();
                         importUI.importCount.text = "Import " + importUI.index + " of " + importUI.imports.Count;
 
@@ -112,7 +256,7 @@ namespace Kitbashery
 
                 case kitbasheryUIMode.inspector:
 
-                    meshInspector.filter.sharedMesh = filters[0].sharedMesh;
+                    meshInspector.filter.sharedMesh = rootImports[0].GO.GetComponentInChildren<MeshFilter>().sharedMesh;
                     ClearImports();
 
                     meshInspector.vertCount.text = "Vertices: " + meshInspector.filter.sharedMesh.vertexCount + " | Triangles: " + meshInspector.filter.sharedMesh.triangles.Length;
@@ -126,7 +270,8 @@ namespace Kitbashery
 
                 case kitbasheryUIMode.buildmode:
 
-                    buildControls.currentImport = imports[0];
+                    buildControls.currentImport = rootImports[0];
+                
                     ClearImports();
 
                     break;
@@ -135,15 +280,14 @@ namespace Kitbashery
 
         public void ClearImports()
         {
-            if (imports.Count > 0)
+            if (rootImports.Count > 0)
             {
-                for (int i = 0; i < imports.Count; i++)
+                for (int i = 0; i < rootImports.Count; i++)
                 {
-                    GameObject import = imports[i];
-                    imports.Remove(import);
-                    Destroy(import);
+                    Import import = rootImports[i];
+                    rootImports.Remove(import);
+                    Destroy(import.GO);
                 }
-                filters.Clear();
             }
         }
 
@@ -223,10 +367,12 @@ namespace Kitbashery
             -Changed finding standard shader with a material definded in the editor.
             -Removed redundant GetComponent calls during component creation.
             -Disabled recive shadows.
+            -Added Import class.
+            -Load function now returns an Import.
         */
 
 
-        private GameObject Load(string meshPath, float scaleX = 1, float scaleY = 1, float scaleZ = 1, bool loadTextures = false)
+        private Import Load(string meshPath, float scaleX = 1, float scaleY = 1, float scaleZ = 1, bool loadTextures = false)
         {
             if (!File.Exists(meshPath))
                 return null;
@@ -417,12 +563,25 @@ namespace Kitbashery
                 return uOb;
             }
 
-            return NodeToGameObject(scene.RootNode); ;
+            return new Import(scene, NodeToGameObject(scene.RootNode), null);         
         }
 
         #endregion
     }
 
+    public class Import
+    {
+        public GameObject GO;
+        public Scene scene;
+        public MeshFilter filters;
+
+        public Import(Scene s, GameObject go, MeshFilter f)
+        {
+            scene = s;
+            GO = go;
+            filters = f;
+        }
+    }
 
     class MeshMaterialBinding
     {

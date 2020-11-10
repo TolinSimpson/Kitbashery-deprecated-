@@ -44,7 +44,7 @@ namespace Kitbashery
 
         [Header("Variables:")]
         [HideInInspector]
-        public GameObject currentImport;
+        public Import currentImport;
         public List<KitbashPart> parts = new List<KitbashPart>();
         public List<KitbashPart> selectedParts = new List<KitbashPart>();
         private List<KitbashPart> copiedParts = new List<KitbashPart>();
@@ -151,15 +151,15 @@ namespace Kitbashery
         {
             importer.mode = KitbasheryMeshImporter.kitbasheryUIMode.buildmode;
             importer.ImportSingle(path);
-            currentImport.transform.SetParent(transform);
+            currentImport.GO.transform.SetParent(transform);
 
-            KitbashPart part = Instantiate(currentImport.GetComponentInChildren<MeshRenderer>().gameObject).AddComponent<KitbashPart>();
+            KitbashPart part = Instantiate(currentImport.GO.GetComponentInChildren<MeshRenderer>().gameObject).AddComponent<KitbashPart>();
             part.transform.SetParent(kitbash.transform);
             part.rend = part.gameObject.GetComponent<MeshRenderer>();
             part.rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             part.rend.receiveShadows = false;
             part.rend.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
-            Destroy(currentImport);
+            Destroy(currentImport.GO);
             // part.gameObject.name.TrimEnd("(clone)".ToCharArray());
             part.filter = part.gameObject.GetComponent<MeshFilter>();
             part.original = part.filter.sharedMesh;
@@ -189,7 +189,7 @@ namespace Kitbashery
 
                 if (filters.Count > 0)
                 {
-                    Mesh combine = MeshCombiner.CombineMeshes(filters, false);
+                    Mesh combine = MeshCombiner.MeshCombiner.Combine(filters.ToArray(), true, 0.01f);
 
                     combine.Optimize();
                     combine.RecalculateBounds();
@@ -320,7 +320,7 @@ namespace Kitbashery
                     mf.sharedMesh = newMesh;
 
                     childCopy.SetActive(false);
-                    importUI.imports.Add(childCopy);
+                    importUI.imports.Add(new Import(importer.GameObjectToAssimpScene(childCopy), childCopy, null));
                 }
             }
 
@@ -328,9 +328,9 @@ namespace Kitbashery
             Destroy(copy);
 
             //Set current import:
-            importUI.current = importUI.imports[0].gameObject;
-            importUI.current.SetActive(true);
-            importUI.meshName.text = importUI.current.name;
+            importUI.current = importUI.imports[0];
+            importUI.current.GO.SetActive(true);
+            importUI.meshName.text = importUI.current.GO.name;
             importUI.index = (importUI.importIndex + 1).ToString();
             importUI.importCount.text = "Import " + importUI.index + " of " + importUI.imports.Count;
 

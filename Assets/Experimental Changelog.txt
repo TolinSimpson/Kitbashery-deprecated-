@@ -37,3 +37,12 @@ Version 1.0.6b:
 -Changed renamed mesh inspector uv preview buttons.
 -Changed mesh inspector vertex counter text color is now black.
 -Changed replaced dilate shader with a better one.
+
+Version 1.0.7b:
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-Added new 3D armor parts.
+-Added improved mesh combiner & UV packer.
+-Updated to Unity 2019.4.12f1 LTS
+-Overhauled implementation of Assimp's importer, imports now retain Assimp Scene data.
+-Prep for Switch over from OBJExport.cs to using Assimp's .obj exporter.
