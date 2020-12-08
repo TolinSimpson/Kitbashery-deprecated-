@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3612121199850395730
+--- !u!114 &-1479951512497247176
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BakeHeight
-  m_Shader: {fileID: -6465566751694194690, guid: dce16dbd97c15e9438320d8d96a8bd35,
+  m_Name: BakeNormalsFromHeight
+  m_Shader: {fileID: -6465566751694194690, guid: 7677f2d5fa277cb429e414a4b825522c,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -62,8 +62,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Boolean_584D232D: 1
-    - Vector1_6643C2AA: 0.5
+    - Boolean_44789A5A: 1
+    - Vector1_2751891E: 0.5
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1

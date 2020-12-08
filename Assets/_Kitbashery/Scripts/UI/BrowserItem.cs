@@ -33,7 +33,7 @@ namespace Kitbashery
 
         private void Start()
         {
-            ToggleTooltip();
+           // ToggleTooltip();
         }
 
         public void ToggleTooltip()
@@ -43,12 +43,12 @@ namespace Kitbashery
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            ToggleTooltip();
+            // ToggleTooltip();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            ToggleTooltip();
+            //ToggleTooltip();
         }
 
         public void OnPointerClick(PointerEventData eventData)

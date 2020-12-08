@@ -48,6 +48,10 @@ namespace Kitbashery
 
         public GameObject selectedItemOptions;
 
+        public RawImage selectedItemThumb;
+
+        public TMP_Text selectedItemName;
+
         public GameObject pageOptions;
 
         /// <summary>
@@ -401,6 +405,8 @@ namespace Kitbashery
 
             selectedItem = item;
             selectedItem.thumbnail.color = selectedUIColor;
+            selectedItemName.text = item.tooltipText.text;
+            selectedItemThumb.texture = item.thumbnail.texture;
             selectedItemOptions.SetActive(true);
             pageOptions.SetActive(false);
         }

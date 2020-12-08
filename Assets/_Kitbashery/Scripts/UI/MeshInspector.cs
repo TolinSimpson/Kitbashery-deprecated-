@@ -133,25 +133,26 @@ namespace Kitbashery
 
         public void EndMeshInspection()
         {
-            orbitCam.enabled = false;
-            orbitCam.transform.position = Vector3.zero;
-            orbitCam.transform.rotation = Quaternion.identity;
+            //orbitCam.enabled = false;
+            //orbitCam.transform.position = Vector3.zero;
+            //orbitCam.transform.rotation = Quaternion.identity;
             browserUI.SetActive(true);
             gameObject.SetActive(false);
             filter.sharedMesh = null;
             useQuads.isOn = false;
             meshFolderPath = string.Empty;
-            paintable.matID = null;
-            paintable.normalMap = null;
+            //paintable.matID = null;
+            //paintable.normalMap = null;
 
             //Reset cam constraints:
             //orbitCam.transform.position = Vector3.zero;
             //orbitCam.transform.localRotation = Quaternion.identity;
-            orbitCam.distance = 5;
+
+            /*orbitCam.distance = 5;
             if (orbitCam.mouseYConstraint == 0)
             {
                 orbitCam.mouseYConstraint = 360;
-            }
+            }*/
 
         }
 
@@ -200,7 +201,6 @@ namespace Kitbashery
         {
             SetCamerUVView(false);
             useQuads.gameObject.SetActive(false);
-            editMatID.SetActive(false);
             rend.material = defaultMat;
         }
 
@@ -208,7 +208,7 @@ namespace Kitbashery
         {
             SetCamerUVView(false);
             useQuads.gameObject.SetActive(true);
-            editMatID.SetActive(false);
+            
 
             if (useQuads.isOn == true)
             {
@@ -224,7 +224,7 @@ namespace Kitbashery
         {
             SetCamerUVView(true);
             useQuads.gameObject.SetActive(false);
-            editMatID.SetActive(false);
+            
             rend.material = uvWireframeMat;
         }
 
@@ -232,7 +232,6 @@ namespace Kitbashery
         {
             SetCamerUVView(false);
             useQuads.gameObject.SetActive(false);
-            editMatID.SetActive(false);
             rend.material = smoothingMat;
         }
 
@@ -240,7 +239,7 @@ namespace Kitbashery
         {
             SetCamerUVView(false);
             useQuads.gameObject.SetActive(false);
-            editMatID.SetActive(false);
+            
             rend.material = uvCheckerMat;
         }
 
@@ -248,7 +247,7 @@ namespace Kitbashery
         {
             SetCamerUVView(false);
             useQuads.gameObject.SetActive(false);
-            editMatID.SetActive(false);
+            
 
             rend.material = normalsMat;
             if (paintable.normalMap != null)
@@ -286,6 +285,7 @@ namespace Kitbashery
 
         #endregion
 
+        /*
         #region Normal Map Editor:
 
         public void DisplayNormalMapEditor()
@@ -371,7 +371,7 @@ namespace Kitbashery
             imageSavedPopup.SetActive(true);
         }
 
-        #endregion
+        #endregion*/
     }
 
 }
