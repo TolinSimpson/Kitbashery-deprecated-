@@ -52,21 +52,17 @@ namespace Kitbashery
 
         public TMP_Text selectedItemName;
 
-        public GameObject pageOptions;
-
         /// <summary>
         /// The container for the UI, this should be the content of the scrollview.
         /// </summary>
         [Tooltip("The container for the UI, this should be the content of the scrollview.")]
         public Transform uiContainer;
 
-        public MeshInspector meshInspector;
-
         public CategoryManager categoryManager;
 
         public LiveLink liveLink;
 
-        public BuildModeUI buildControls;
+        public KB_ObjectManager objectManager;
 
         [HideInInspector]
         public int currentPage = 1;
@@ -217,10 +213,6 @@ namespace Kitbashery
         /// <param name="enabled">Enable or disable the item.</param>
         public void ToggleHideBrowserItem(BrowserItem item, bool enabled)
         {
-            if (enabled == false)//This if statement was to fix a bug, unsure what the source actually was but tooltips were being toggled on when they should have been.
-            {
-                item.tooltip.SetActive(false);
-            }
             item.thumbnail.enabled = enabled;
             item.enabled = enabled;
         }
@@ -244,8 +236,6 @@ namespace Kitbashery
                         {
                             item.meshPath = path;
                         }
-
-                        item.tooltipText.text = rootDirectoryName;
                     }
                 }
             }
@@ -405,10 +395,9 @@ namespace Kitbashery
 
             selectedItem = item;
             selectedItem.thumbnail.color = selectedUIColor;
-            selectedItemName.text = item.tooltipText.text;
+            selectedItemName.text = Path.GetFileNameWithoutExtension(item.meshPath);
             selectedItemThumb.texture = item.thumbnail.texture;
             selectedItemOptions.SetActive(true);
-            pageOptions.SetActive(false);
         }
 
         public void DeselectItem()
@@ -418,14 +407,7 @@ namespace Kitbashery
                 selectedItem.thumbnail.color = Color.white;
                 selectedItemOptions.SetActive(false);
                 selectedItem = null;
-                pageOptions.SetActive(true);
             }
-        }
-
-        public void InspectSelectedItem()
-        {
-            meshInspector.gameObject.SetActive(true);
-            meshInspector.InspectMesh(selectedItem.meshPath);
         }
 
         public void ShowDeletePopup()
@@ -467,7 +449,7 @@ namespace Kitbashery
 
         public void AddItemToKitbash()
         {
-            buildControls.AddPart(selectedItem.meshPath);
+            objectManager.AddPartToKitbash(selectedItem.meshPath);
         }
 
         #endregion

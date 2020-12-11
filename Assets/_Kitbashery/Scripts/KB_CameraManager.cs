@@ -2,12 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Kitbashery © 2020 Tolin Simpson 
+//Code released under GNU General Public License v3.0 see licnese file for full details.
+
 namespace Kitbashery
 {
-
+    /// <summary>
+    /// Manages camera movement, raycasts and rendering.
+    /// </summary>
     [RequireComponent(typeof(Camera))]
-    public class CameraOrbit : MonoBehaviour
+    public class KB_CameraManager : MonoBehaviour
     {
+        #region Variables:
+
+        [Header("Other Managers:")]
+        public KB_UIManager uiManager;
+        public KB_ObjectManager objectManager;
+
+        [Header("Camera Orbit Settings:")]
         public Camera orbitCam;
         public Transform target;
 
@@ -27,9 +39,30 @@ namespace Kitbashery
         [Range(-360, 360)]
         public float mouseYConstraint = 360;
 
-        private void Awake()
+
+        [Header("Camera Render Settings:")]
+        public Camera renderCam;
+        public int workingResolution = 1024;
+
+        [Header("Camera Raycast Settings:")]
+        public LayerMask mask = 8;
+        private RaycastHit hit;
+
+
+        #endregion
+
+        #region Initialization & Updates:
+
+        // Start is called before the first frame update
+        void Start()
         {
-            this.enabled = false;// Make sure this is disabled at start otherwise if the user imports a mesh before inspecting a mesh then the lighting can be rotated in the thumbnail preview (might be a useful bug).
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
         }
 
         private void LateUpdate()
@@ -95,6 +128,55 @@ namespace Kitbashery
                 }
             }
         }
-    }
 
+        #endregion
+
+        #region Core Functions:
+
+        public RaycastHit Raycast()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            {
+
+                //Debug.Log("Pixel Coordinates: ( " + Mathf.RoundToInt(hit.textureCoord.x * workingResolution) + ", " + Mathf.RoundToInt(hit.textureCoord.y * workingResolution) + " )");
+
+            }
+            else
+            {
+                // hit nothing...
+            }
+
+            return hit;
+        }
+
+        public void FitCameraToMeshBounds(MeshFilter filter, float offset)
+        {
+            distance = filter.sharedMesh.bounds.size.x + offset;
+        }
+
+        public void ToggleUVView(bool uvViewToggle)
+        {
+            uvView = uvViewToggle;
+            orbitCam.orthographic = uvViewToggle;
+
+            if (uvViewToggle == true)
+            {
+                mouseYConstraint = 0;
+                distance = 0.6f;
+            }
+            else
+            {
+                if (mouseYConstraint == 0)
+                {
+                    FitCameraToMeshBounds(objectManager.inspected.filter, 5);
+                    mouseYConstraint = 360;
+                }
+            }
+
+        }
+
+        #endregion
+    }
 }

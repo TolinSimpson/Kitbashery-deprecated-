@@ -16,7 +16,7 @@ namespace Kitbashery
     /// UI buttons managed by the <see cref="BrowserManager"/> that represent .obj files in the StreamingAssets folder structure.
     /// </summary>
     [Serializable]
-    public class BrowserItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class BrowserItem : MonoBehaviour,  IPointerClickHandler
     {
         public string thumbPath;
 
@@ -24,32 +24,8 @@ namespace Kitbashery
 
         public RawImage thumbnail;
 
-        public GameObject tooltip;
-
-        public TMP_Text tooltipText;
-
         [HideInInspector]
         public BrowserManager manager;
-
-        private void Start()
-        {
-           // ToggleTooltip();
-        }
-
-        public void ToggleTooltip()
-        {
-            tooltip.SetActive(!tooltip.activeSelf);
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            // ToggleTooltip();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            //ToggleTooltip();
-        }
 
         public void OnPointerClick(PointerEventData eventData)
         {

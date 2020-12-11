@@ -10,28 +10,28 @@ using UnityEngine.EventSystems;
 namespace Kitbashery
 {
     /// <summary>
-    /// Blocks painting controls when the mouse cursor is over a selectable UI element.
+    /// Blocks controls when the mouse cursor is over a selectable UI element.
     /// </summary>
     public class UIControlsBlocker : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public PaintableObject paintable;
+        public KB_ObjectManager objectManager;
 
         public void Awake()
         {
-            if(paintable == null)
+            if(objectManager == null)
             {
-                paintable = GameObject.FindGameObjectsWithTag("Paintable")[0].GetComponent<PaintableObject>();
+                objectManager = GameObject.FindGameObjectsWithTag("Managers")[0].GetComponent<KB_ObjectManager>();
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            paintable.lockControls = true;
+            objectManager.lockControls = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            paintable.lockControls = false;
+            objectManager.lockControls = false;
         }
     }
 }

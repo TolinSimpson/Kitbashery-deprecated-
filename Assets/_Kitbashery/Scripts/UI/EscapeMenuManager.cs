@@ -14,7 +14,7 @@ namespace Kitbashery
 
         public GameObject saveKitbashPopup;
 
-        public BuildModeUI buildControls;
+        public KB_ObjectManager objectManager;
 
         // Update is called once per frame
         void Update()
@@ -27,7 +27,7 @@ namespace Kitbashery
 
         public void QuitApplication()
         {
-            if(buildControls.kitbash.transform.childCount > 0)
+            if(objectManager.kitbash.transform.childCount > 0)
             {
                 escapeMenuPopup.SetActive(false);
                 saveKitbashPopup.SetActive(true);

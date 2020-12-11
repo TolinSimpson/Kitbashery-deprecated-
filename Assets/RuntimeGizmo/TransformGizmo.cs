@@ -138,7 +138,7 @@ namespace RuntimeGizmos
 
         [Space]
         [Header("Kitbashery:")]
-        public BuildModeUI buildControls;
+        public KB_ObjectManager objectManager;
         public UnityEvent onSelected;
         public UnityEvent onDeselect;
 
@@ -695,7 +695,7 @@ namespace RuntimeGizmos
 
 				AddTargetRoot(target);
 				AddTargetHighlightedRenderers(target);
-                buildControls.SelectPart(target.GetComponent<KitbashPart>());
+                objectManager.SelectPart(target.GetComponent<KitbashPart>());
 
 				SetPivotPoint();
 
@@ -713,7 +713,7 @@ namespace RuntimeGizmos
 
 				RemoveTargetHighlightedRenderers(target);
 				RemoveTargetRoot(target);
-                buildControls.DeselectPart(target.GetComponent<KitbashPart>());
+                objectManager.DeselectPart(target.GetComponent<KitbashPart>());
 
                 SetPivotPoint();
 

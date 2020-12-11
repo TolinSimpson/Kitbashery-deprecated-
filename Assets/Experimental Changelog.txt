@@ -46,3 +46,8 @@ Version 1.0.7b:
 -Updated to Unity 2019.4.12f1 LTS
 -Overhauled implementation of Assimp's importer, imports now retain Assimp Scene data.
 -Prep for Switch over from OBJExport.cs to using Assimp's .obj exporter.
+
+Version 2020.1.e.a: [PREVIOUS VERSIONS CONCIDERED KITBASHERY LEGACY VERSIONS] [VERSIONING FORMAT IS NOW (year, build, experimental/stable, alpha/beta)]
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-Complete UI overhaul and code refactoring.

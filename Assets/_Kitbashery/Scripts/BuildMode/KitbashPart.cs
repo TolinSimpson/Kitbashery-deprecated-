@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Kitbashery
 {
     /// <summary>
-    /// Holds refrence to GameObject components and contains methods for modifying the mesh.
+    /// Holds refrence to GameObject components and contains methods for modifying the mesh and material.
     /// </summary>
     public class KitbashPart : MonoBehaviour
     {
@@ -17,6 +17,17 @@ namespace Kitbashery
         public MeshCollider col;
         public Mesh original;
         public HierarchyItem ui;
+        public Texture2D unwrapTex;//TODO: defined in the object manager...needs refactor.
+
+        public void SetMaterial(Material mat)
+        {
+            rend.material = mat;
+        }
+
+        public void SetMaterialProperty(int value)
+        {
+            //rend.material.SetInt
+        }
 
         public void Decimate(int iterations)
         {

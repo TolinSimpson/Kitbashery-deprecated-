@@ -17,7 +17,7 @@ namespace Kitbashery
 
         public KitbashPart part;
         [HideInInspector]
-        public BuildModeUI buildControls;
+        public KB_ObjectManager objectManager;
 
         // Start is called before the first frame update
         void Start()
